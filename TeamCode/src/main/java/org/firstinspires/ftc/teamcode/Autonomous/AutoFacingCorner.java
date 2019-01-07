@@ -169,67 +169,81 @@ public class AutoFacingCorner extends LinearOpMode {
 */
         telemetry.addData("waiting", "waiting");
         telemetry.update();
-        sleep(1000);
+        sleep(100);
 
 
-        GO(13);
+        GO(15);
 
-        TurnRight(18);
-        sleep(500);
+        TurnRight(24);
+        sleep(550);
 
-        GoBack(2);
+        //GoBack(1);
 
         robot.csServo.setPosition(1);
         telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
         telemetry.update();
-        robot.csServo.setPosition(0.25);
+//      robot.csServo.setPosition(0.25);
         sleep(500);
         telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
         telemetry.update();
 
-
+/*
         if (robot.color1.blue() < 15)
         {
-            robot.csServo.setPosition(.25);
-            sleep(250);
+            robot.csServo.setPosition(0);
+            sleep(300);
             robot.csServo.setPosition(1);
         }
         else
         {
             GoBack(16.971);
-            sleep(250);
+            sleep(300);
         }
 
         if (robot.color1.blue() < 15)
         {
-            robot.csServo.setPosition(.25);
-            sleep(250);
+            robot.csServo.setPosition(0);
+            sleep(300);
             robot.csServo.setPosition(1);
             GO(16.971);
         }
         else
         {
             GoBack(16.971);
-            sleep(250);
-            robot.csServo.setPosition(.25);
             sleep(500);
-            GO(2*16.971);
+            robot.csServo.setPosition(0);
+            sleep(300);
+            robot.csServo.setPosition(1);
+            sleep(300);
+            GO(2*16.971+5);
         }
-
-
-/*
-        GO(24);
-
-        TurnRight(45);
-
-        GoBack(36);
 */
 
-//-----------Add Marker Dump Here-------------
+      //  TurnLeft(25);
+
+        GO(26);
+
+        TurnRight(35);
+
+        GoBack(50);
+
+        //TurnRight(-5);
+
+        TurnRight(61);
+
+        robot.mServo.setPosition(0.1);
+
+        GoBack(80);
+
+//-----        GoBack(85);
+
+//        TurnRight(45);
+
+//        GoBack(36);
 
 //        GO(74);
 
-        sleep(10000);
+        sleep(15000);
     }
 
     public void GO(double inches)
@@ -288,12 +302,12 @@ public class AutoFacingCorner extends LinearOpMode {
         }
         robot.rightDrive.setPower(0);
         robot.leftDrive.setPower(0);
-        robot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //robot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
 
-    public void TurnRight(int degrees)
+    public void TurnRight(double degrees)
     {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -323,8 +337,7 @@ public class AutoFacingCorner extends LinearOpMode {
         robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void TurnLeft(int degrees)
-    {
+    public void TurnLeft(int degrees) {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -337,8 +350,8 @@ public class AutoFacingCorner extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(.05);
-        robot.leftDrive.setPower(-.05);
+        robot.rightDrive.setPower(.1);
+        robot.leftDrive.setPower(-.1);
 
         while (robot.leftDrive.getCurrentPosition() > degrees*24.444) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
