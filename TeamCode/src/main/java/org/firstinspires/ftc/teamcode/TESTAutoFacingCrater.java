@@ -103,8 +103,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(500);
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // Send telemetry message to indicate successful Encoder reset
 
@@ -138,10 +138,10 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
 
         robot.leftDrive.setPower(.5);
-        sleep(500);
+        sleep(550);
         robot.leftDrive.setPower(0);
 
-        sleep(3000);
+        sleep(500);
 
 /*
         robot.rightDrive.setTargetPosition(-20000);
@@ -174,8 +174,13 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(250);
 
 
-        GO(26); //14
+        GO(22); //14
 
+        robot.csServo.setPosition(.5);
+        robot.cs2Servo.setPosition(.5);
+
+       // TurnRight(25);
+/*
         TurnRight(24);
         sleep(500);
 
@@ -227,7 +232,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         GoBack(16.971);
         sleep(250);
         GO(2*16.971+5);
-*/
+
 
         TurnRight(22); //25
 
@@ -244,7 +249,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.leftDrive.setPower(.25);
         sleep(100);
         robot.leftDrive.setPower(0);
-
+*/
         sleep(15000);
 
 
@@ -255,8 +260,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+     //   robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+     //   robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
                 robot.rightDrive.getCurrentPosition(),
@@ -264,8 +269,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(.05);
-        robot.leftDrive.setPower(.05);
+        robot.rightDrive.setPower(.5);
+        robot.leftDrive.setPower(.5);
 
         while (robot.leftDrive.getCurrentPosition() > -inches*47.619) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
