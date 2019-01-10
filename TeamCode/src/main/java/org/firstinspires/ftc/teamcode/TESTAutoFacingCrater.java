@@ -101,10 +101,11 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
 
         sleep(500);
-        robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //robot.armMotor.setPower(-.0001);
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         // Send telemetry message to indicate successful Encoder reset
 
@@ -117,7 +118,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         // robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
         // robot.rightClaw.setPosition(0.0);
-        robot.armMotor.setTargetPosition(-5500);
+        robot.armMotor.setTargetPosition(5750);
 
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
@@ -132,13 +133,13 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         sleep(3000);     // pause for servos to move
 
-        // Wait for the game to start (driver presses PLAY)
+
 
 
         telemetry.update();
 
         robot.leftDrive.setPower(.5);
-        sleep(550);
+        sleep(750);
         robot.leftDrive.setPower(0);
 
         sleep(500);
@@ -176,10 +177,33 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         GO(22); //14
 
-        robot.csServo.setPosition(.5);
-        robot.cs2Servo.setPosition(.5);
+        TurnRight(24);
 
-       // TurnRight(25);
+        robot.csServo.setPosition(.25);
+  //      robot.cs2Servo.setPosition(.5);
+
+        GoBack(17);
+        sleep(500);
+        GoBack(18);
+        sleep(500);
+        GoBack(20);
+
+        robot.csServo.setPosition(.8);
+
+        GO(49);
+        sleep(200);
+        TurnRight(25);
+        sleep(200);
+        GO(50);
+        sleep(200);
+        robot.mServo.setPosition(.2);
+
+        sleep(1000);
+
+        robot.mServo.setPosition(.75);
+
+        GoBackFast(80);
+
 /*
         TurnRight(24);
         sleep(500);
@@ -260,8 +284,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-     //   robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-     //   robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
                 robot.rightDrive.getCurrentPosition(),
@@ -269,8 +293,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(.5);
-        robot.leftDrive.setPower(.5);
+        robot.rightDrive.setPower(.8);
+        robot.leftDrive.setPower(.8);
 
         while (robot.leftDrive.getCurrentPosition() > -inches*47.619) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -291,7 +315,37 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);               // Change to USING if does not work
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
+                robot.leftDrive.getCurrentPosition(),
+                robot.rightDrive.getCurrentPosition(),
+                robot.armMotor.getCurrentPosition());
+        telemetry.update();
+        sleep(1000);
+
+        robot.rightDrive.setPower(-.25);
+        robot.leftDrive.setPower(-.25);
+        while (robot.rightDrive.getCurrentPosition() < inches*47.619 && robot.leftDrive.getCurrentPosition() < inches*47.619) {
+            telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
+                    robot.leftDrive.getCurrentPosition(),
+                    robot.rightDrive.getCurrentPosition(),
+                    robot.armMotor.getCurrentPosition());
+            telemetry.update();
+        }
+
+        robot.rightDrive.setPower(0);
+        robot.leftDrive.setPower(0);
+        robot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    public void GoBackFast(double inches)
+    {
+        robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);               // Change to USING if does not work
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
@@ -300,8 +354,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(-.02);
-        robot.leftDrive.setPower(-.02);
+        robot.rightDrive.setPower(-1);
+        robot.leftDrive.setPower(-1);
 
         while (robot.rightDrive.getCurrentPosition() < inches*47.619 && robot.leftDrive.getCurrentPosition() < inches*47.619) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -316,6 +370,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
+
 
 
     public void TurnRight(double degrees)

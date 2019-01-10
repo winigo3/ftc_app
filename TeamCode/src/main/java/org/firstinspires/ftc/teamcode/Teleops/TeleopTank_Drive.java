@@ -99,8 +99,8 @@ public class TeleopTank_Drive extends LinearOpMode {
             // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
             left = gamepad1.left_stick_y;
             right = gamepad1.right_stick_y;
-            robot.leftDrive.setPower(left/2);    //REMOVE /2 after Discovery Museum
-            robot.rightDrive.setPower(right/2);
+            robot.leftDrive.setPower(left);    //Add /2 for Discovery Museum
+            robot.rightDrive.setPower(right);
 
             if (gamepad1.x)
             {
@@ -126,11 +126,16 @@ public class TeleopTank_Drive extends LinearOpMode {
             if (gamepad1.dpad_up)
                 robot.csServo.setPosition(1);
 
-/*            if (gamepad1.dpad_left)
-                robot.mServo.setPosition(.1);
-            if(gamepad1.dpad_right)
-                robot.mServo.setPosition(.75);
-*/
+            if (gamepad2.dpad_down)
+                robot.csServo.setPosition(.25);
+            if(gamepad2.dpad_up)
+                robot.csServo.setPosition(.8);
+
+            if (gamepad2.b)
+                robot.cs2Servo.setPosition(.25);
+            if (gamepad2.x)
+                robot.cs2Servo.setPosition(.8);
+
                // robot.rightDrive.setPower(0);
 
            /* if (gamepad1.right_bumper)

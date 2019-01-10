@@ -141,7 +141,7 @@ public class TESTAutoDriveByEncoder_Linear extends LinearOpMode {
 
         robot.leftDrive.setPower(.5);
         sleep(500);
-        robot.leftDrive.setPower(0);
+        robot.leftDrive.setPower(0);        // Wait for the game to start (driver presses PLAY)
 
         sleep(3000);
 
