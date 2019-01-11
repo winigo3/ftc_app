@@ -131,7 +131,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.armMotor.setPower(1);
 
-        sleep(3000);     // pause for servos to move
+        sleep(2500);     // pause for servos to move
 
 
 
@@ -142,7 +142,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(750);
         robot.leftDrive.setPower(0);
 
-        sleep(500);
+        sleep(100);
 
 /*
         robot.rightDrive.setTargetPosition(-20000);
@@ -172,33 +172,34 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 */
         telemetry.addData("waiting", "waiting");
         telemetry.update();
-        sleep(250);
+        sleep(100);
 
 
         GO(22); //14
 
-        TurnRight(24);
+        TurnRight(21);
 
         robot.csServo.setPosition(.25);
   //      robot.cs2Servo.setPosition(.5);
 
-        GoBack(17);
-        sleep(500);
-        GoBack(18);
+        GoBack(19);
         sleep(500);
         GoBack(20);
+        sleep(500);
+        GoBack(21);
+        sleep(500);
 
         robot.csServo.setPosition(.8);
 
         GO(49);
-        sleep(200);
-        TurnRight(25);
-        sleep(200);
-        GO(50);
-        sleep(200);
+       // sleep(200);
+        TurnRight(22);
+       // sleep(200);
+        GO(52);
+       // sleep(200);
         robot.mServo.setPosition(.2);
 
-        sleep(1000);
+        sleep(500);
 
         robot.mServo.setPosition(.75);
 
@@ -274,7 +275,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(100);
         robot.leftDrive.setPower(0);
 */
-        sleep(15000);
+        sleep(10000);
 
 
     }
@@ -293,8 +294,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(.8);
-        robot.leftDrive.setPower(.8);
+        robot.rightDrive.setPower(1);
+        robot.leftDrive.setPower(1);
 
         while (robot.leftDrive.getCurrentPosition() > -inches*47.619) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -324,8 +325,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(-.25);
-        robot.leftDrive.setPower(-.25);
+        robot.rightDrive.setPower(-.5);
+        robot.leftDrive.setPower(-.5);
         while (robot.rightDrive.getCurrentPosition() < inches*47.619 && robot.leftDrive.getCurrentPosition() < inches*47.619) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                     robot.leftDrive.getCurrentPosition(),
