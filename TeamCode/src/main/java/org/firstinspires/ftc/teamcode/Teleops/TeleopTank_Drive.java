@@ -131,11 +131,11 @@ public class TeleopTank_Drive extends LinearOpMode {
             if(gamepad2.dpad_up)
                 robot.csServo.setPosition(.8);
 
-            if (gamepad2.b)
+/*            if (gamepad2.b)
                 robot.cs2Servo.setPosition(.25);
             if (gamepad2.x)
                 robot.cs2Servo.setPosition(.8);
-
+*/
                // robot.rightDrive.setPower(0);
 
            /* if (gamepad1.right_bumper)
