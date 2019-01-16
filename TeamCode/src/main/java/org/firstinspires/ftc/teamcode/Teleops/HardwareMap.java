@@ -60,9 +60,10 @@ public class HardwareMap
     public DcMotor armMotor = null;
     public Servo    csServo       = null;
     public ColorSensor color1 = null;
+    public ColorSensor color2 = null;
     public Servo mServo = null;
 
-    public Servo cs2Servo = null;
+    //public Servo cs2Servo = null;
 
     public Servo    claw        = null;
 
@@ -95,8 +96,8 @@ public class HardwareMap
         mServo = hwMap.servo.get("ms");
         mServo.setPosition(.8);
 
-        cs2Servo = hwMap.servo.get("cs2");
-        cs2Servo.setPosition(.8);
+        color2 = hwMap.colorSensor.get("c2");
+        //cs2Servo.setPosition(.8);
 
         color1 = hwMap.colorSensor.get("c1");
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
