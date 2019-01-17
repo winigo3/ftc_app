@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
@@ -63,9 +63,9 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name = "TEST Auto facing crater", group = "Pushbot")
+@Autonomous(name = "Test Depot Autonomous", group = "Pushbot")
 //@Disabled
-public class TESTAutoFacingCrater extends LinearOpMode {
+public class AutoCornerColor extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareMap robot = new HardwareMap();   // Use a Pushbot's hardware
@@ -78,7 +78,6 @@ public class TESTAutoFacingCrater extends LinearOpMode {
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 0.6;
     static final double     TURN_SPEED              = 0.5; */
-
 
     @Override
     public void runOpMode() {
@@ -102,9 +101,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
 
         sleep(500);
-
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //robot.armMotor.setPower(-.0001);
+
         robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -119,7 +117,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         // robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
         // robot.rightClaw.setPosition(0.0);
-        robot.armMotor.setTargetPosition(5750);
+        robot.armMotor.setTargetPosition(-5500);
 
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
@@ -132,21 +130,16 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.armMotor.setPower(1);
 
-        sleep(2500);     // pause for servos to move
+        sleep(3000);     // pause for servos to move
 
-
+        // Wait for the game to start (driver presses PLAY)
 
 
         telemetry.update();
 
- //       TurnRight(25);
-
-
         robot.leftDrive.setPower(.5);
         sleep(500);
         robot.leftDrive.setPower(0);
-
-        sleep(100);
 
 /*
         robot.rightDrive.setTargetPosition(-20000);
@@ -179,146 +172,84 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(100);
 
 
-        GO(18); //14
-
-        TurnRight(25);
-
-        robot.csServo.setPosition(.25);
-  //      robot.cs2Servo.setPosition(.5);
-/*
-        GoBack(14);
-        sleep(500);
-        GoBack(18);
-        sleep(500);
-        GoBack(19);
-        sleep(500);
-*/
-
-        GoBack(6.5);
-
-        if (robot.color1.blue() < 15 || robot.color2.blue() < 15)
-        {
-            robot.csServo.setPosition(.1);
-            sleep(250);
-            robot.csServo.setPosition(.8);
-            GO(12);
-        }
-        else
-        {
-            GoBack(18);
-            sleep(250);
-
-            if (robot.color1.blue() < 15 || robot.color2.blue() < 15)
-            {
-                robot.csServo.setPosition(.1);
-                sleep(250);
-                robot.csServo.setPosition(.8);
-                GO(30);
-            }
-            else
-            {
-                GoBack(20);
-                sleep(250);
-                robot.csServo.setPosition(.1);
-                sleep(500);
-                robot.csServo.setPosition(.8);
-                GO(49);
-            }
-        }
-
-
-
-        robot.csServo.setPosition(.75);
-
-//        GO(49);
-       // sleep(200);
-        TurnRight(33);
-       // sleep(200);
-        GO(52);
-       // sleep(200);
-        robot.mServo.setPosition(.2);
-
-        sleep(500);
-
-        robot.mServo.setPosition(.75);
-
-  //      TurnRight(5);
-
-        GoBackFast(84);
-
-/*
-        TurnRight(24);
-        sleep(500);
-
-
-
-   //     GoBack(3);
-
-        robot.csServo.setPosition(1);
-        telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
-        telemetry.update();
-      //  robot.csServo.setPosition(0.25);
+        GoBack(12);
         sleep(250);
+        GoBack(18);
+        sleep(250);
+        GoBack(19);
+        sleep(250);
+
+
+//        TurnRight(24);
+//        sleep(550);
+
+        //GoBack(1);
+
+        robot.csServo.setPosition(.7);
+        telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
+        telemetry.update();
+//      robot.csServo.setPosition(0.25);
+        sleep(500);
         telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
         telemetry.update();
 
-
-        /*
+/*
         if (robot.color1.blue() < 15)
         {
-            robot.csServo.setPosition(.25);
-            sleep(250);
+            robot.csServo.setPosition(0);
+            sleep(300);
             robot.csServo.setPosition(1);
         }
         else
         {
             GoBack(16.971);
-            sleep(250);
+            sleep(300);
         }
 
         if (robot.color1.blue() < 15)
         {
-            robot.csServo.setPosition(.25);
-            sleep(250);
+            robot.csServo.setPosition(0);
+            sleep(300);
             robot.csServo.setPosition(1);
             GO(16.971);
         }
         else
         {
             GoBack(16.971);
-            sleep(250);
-            robot.csServo.setPosition(.25);
             sleep(500);
+            robot.csServo.setPosition(0);
+            sleep(300);
+            robot.csServo.setPosition(1);
+            sleep(300);
             GO(2*16.971+5);
         }
 */
-/*
-        GoBack(16.971);
-        sleep(250);
-        GoBack(16.971);
-        sleep(250);
-        GO(2*16.971+5);
 
+      //  TurnLeft(25);
 
-        TurnRight(22); //25
+        GO(40);
 
-        GO(73);
+        TurnRight(35);
 
+        GoBack(50);
 
+        //TurnRight(-5);
 
-        robot.mServo.setPosition(0.1);
+        TurnRight(61);
 
-        TurnRight(17); //17
+        robot.mServo.setPosition(0.2);
 
-        GoBack(90); //85
+        GoBack(80);
 
-        robot.leftDrive.setPower(.25);
-        sleep(100);
-        robot.leftDrive.setPower(0);
-*/
-        sleep(10000);
+//-----        GoBack(85);
 
+//        TurnRight(45);
 
+//        GoBack(36);
+
+//        GO(74);
+
+        sleep(15000);
     }
 
     public void GO(double inches)
@@ -335,8 +266,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(1);
-        robot.leftDrive.setPower(1);
+        robot.rightDrive.setPower(.05);
+        robot.leftDrive.setPower(.05);
 
         while (robot.leftDrive.getCurrentPosition() > -inches*47.619) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -351,13 +282,12 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-
     public void GoBack(double inches)
     {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);               // Change to USING if does not work
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
@@ -368,51 +298,19 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         robot.rightDrive.setPower(-.3);
         robot.leftDrive.setPower(-.3);
-        while (robot.rightDrive.getCurrentPosition() < inches*47.619 && robot.leftDrive.getCurrentPosition() < inches*47.619) {
+
+        while (robot.leftDrive.getCurrentPosition() < inches*47.619) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                     robot.leftDrive.getCurrentPosition(),
                     robot.rightDrive.getCurrentPosition(),
                     robot.armMotor.getCurrentPosition());
             telemetry.update();
         }
-
         robot.rightDrive.setPower(0);
         robot.leftDrive.setPower(0);
-        robot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //robot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        //robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
-
-    public void GoBackFast(double inches)
-    {
-        robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-        robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
-
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);               // Change to USING if does not work
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
-                robot.leftDrive.getCurrentPosition(),
-                robot.rightDrive.getCurrentPosition(),
-                robot.armMotor.getCurrentPosition());
-        telemetry.update();
-        sleep(1000);
-
-        robot.rightDrive.setPower(-1);
-        robot.leftDrive.setPower(-1);
-
-        while (robot.rightDrive.getCurrentPosition() < inches*47.619 && robot.leftDrive.getCurrentPosition() < inches*47.619) {
-            telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
-                    robot.leftDrive.getCurrentPosition(),
-                    robot.rightDrive.getCurrentPosition(),
-                    robot.armMotor.getCurrentPosition());
-            telemetry.update();
-        }
-
-        robot.rightDrive.setPower(0);
-        robot.leftDrive.setPower(0);
-        robot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-    }
-
 
 
     public void TurnRight(double degrees)
@@ -429,8 +327,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(-.1);
-        robot.leftDrive.setPower(.1);
+        robot.rightDrive.setPower(-.05);
+        robot.leftDrive.setPower(.05);
 
         while (robot.leftDrive.getCurrentPosition() > -degrees*24.444) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -445,8 +343,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void TurnLeft(int degrees)
-    {
+    public void TurnLeft(int degrees) {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -459,8 +356,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(.05);
-        robot.leftDrive.setPower(-.05);
+        robot.rightDrive.setPower(.1);
+        robot.leftDrive.setPower(-.1);
 
         while (robot.leftDrive.getCurrentPosition() > degrees*24.444) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
