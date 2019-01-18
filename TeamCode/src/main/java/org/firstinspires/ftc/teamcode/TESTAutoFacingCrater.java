@@ -143,7 +143,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
 
         robot.leftDrive.setPower(.5);
-        sleep(500);
+        sleep(750);
         robot.leftDrive.setPower(0);
 
         sleep(100);
