@@ -143,7 +143,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
 
         robot.leftDrive.setPower(.5);
-        sleep(750);
+        sleep(700);
         robot.leftDrive.setPower(0);
 
         sleep(100);
@@ -179,9 +179,9 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(100);
 
 
-        GO(18); //14
+        GO(24); //14
 
-        TurnRight(25);
+        TurnRight(21);
 
         robot.csServo.setPosition(.25);
   //      robot.cs2Servo.setPosition(.5);
@@ -194,9 +194,9 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(500);
 */
 
-        GoBack(6.5);
+        GoBack(18);
 
-        if (robot.color1.blue() < 15 || robot.color2.blue() < 15)
+        if ((robot.color1.blue() < 30 && robot.color1.blue() > 21) || (robot.color2.blue() < 30 && robot.color2.blue() > 21))
         {
             robot.csServo.setPosition(.1);
             sleep(250);
@@ -208,7 +208,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
             GoBack(18);
             sleep(250);
 
-            if (robot.color1.blue() < 15 || robot.color2.blue() < 15)
+            if ((robot.color1.blue() < 30 && robot.color1.blue() > 21) || (robot.color2.blue() < 30 && robot.color2.blue() > 21))
             {
                 robot.csServo.setPosition(.1);
                 sleep(250);
