@@ -10,7 +10,7 @@ import org.firstinspires.ftc.teamcode.MasterHardwareClass;
  * ☺ Welcome to your first teleop code! ☺
  */
 @TeleOp(name = "My Servo Control Teleop", group = "Learning")
-//@Disabled
+@Disabled
 public class PositionServoLearningTeleop extends LinearOpMode {
 
     /* This says to use the LearningHardwareClass */

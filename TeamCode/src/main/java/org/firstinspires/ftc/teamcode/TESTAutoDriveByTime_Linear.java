@@ -59,7 +59,7 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
  */
 
 @Autonomous(name="Pushbot: Auto Drive By Time", group="Pushbot")
-//@Disabled
+@Disabled
 public class TESTAutoDriveByTime_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */

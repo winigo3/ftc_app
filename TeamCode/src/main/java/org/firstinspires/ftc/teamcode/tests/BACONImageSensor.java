@@ -67,7 +67,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaTrackables;
  */
 
 @Autonomous(name="BACON vumark", group ="Tests")
-//@Disabled
+@Disabled
 public class BACONImageSensor extends LinearOpMode {
 
     public static final String TAG = "Vuforia VuMark Sample";

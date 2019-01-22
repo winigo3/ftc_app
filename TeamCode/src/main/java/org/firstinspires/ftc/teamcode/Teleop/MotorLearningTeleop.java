@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.Teleop;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -11,7 +12,7 @@ import org.firstinspires.ftc.teamcode.MasterHardwareClass;
  * ☺ Welcome to your first teleop code! ☺
  */
 @TeleOp(name = "My Motor Control Teleop", group = "Learning")
-//@Disabled
+@Disabled
 public class MotorLearningTeleop extends LinearOpMode {
 
     /* This says to use the LearningHardwareClass */

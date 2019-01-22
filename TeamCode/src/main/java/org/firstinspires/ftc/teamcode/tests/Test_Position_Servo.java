@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode.tests;
 
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.CRServo;
@@ -9,7 +10,7 @@ import com.qualcomm.robotcore.hardware.Servo;
  * ☺ Hi! Esto es el codigo para el 24 Febrero! ☺
  */
 @TeleOp(name = "Test Position Servo", group = "Tests")
-//@Disabled
+@Disabled
 public class Test_Position_Servo extends LinearOpMode {
 
     /* Declare all objects */
