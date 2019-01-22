@@ -139,15 +139,15 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         telemetry.update();
 
- //       TurnRight(25);
 
 
+/*
         robot.leftDrive.setPower(.5);
         sleep(700);
         robot.leftDrive.setPower(0);
 
         sleep(100);
-
+*/
 /*
         robot.rightDrive.setTargetPosition(-20000);
         robot.leftDrive.setTargetPosition(20000);
@@ -174,6 +174,9 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.rightDrive.setPower(0);
         robot.leftDrive.setPower(0);
 */
+
+        TurnRight(36);
+
         telemetry.addData("waiting", "waiting");
         telemetry.update();
         sleep(100);
@@ -181,7 +184,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         GO(24); //14
 
-        TurnRight(21);
+        TurnRight(23);
 
         robot.csServo.setPosition(.25);
   //      robot.cs2Servo.setPosition(.5);
@@ -194,7 +197,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(500);
 */
 
-        GoBack(18);
+        GoBack(8.75);
 
         if ((robot.color1.blue() < 30 && robot.color1.blue() > 21) || (robot.color2.blue() < 30 && robot.color2.blue() > 21))
         {

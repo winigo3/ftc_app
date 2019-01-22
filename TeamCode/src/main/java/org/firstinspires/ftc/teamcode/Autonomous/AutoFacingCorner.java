@@ -117,7 +117,7 @@ public class AutoFacingCorner extends LinearOpMode {
 
         // robot.leftClaw.setPosition(1.0);            // S4: Stop and close the claw.
         // robot.rightClaw.setPosition(0.0);
-        robot.armMotor.setTargetPosition(-5500);
+        robot.armMotor.setTargetPosition(5750);
 
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
