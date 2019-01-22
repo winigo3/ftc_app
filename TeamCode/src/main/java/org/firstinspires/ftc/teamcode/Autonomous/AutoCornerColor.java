@@ -172,18 +172,19 @@ public class AutoCornerColor extends LinearOpMode {
 
         GO(24);
 
-        TurnRight(21);
+        TurnRight(22.5);
 
         telemetry.addData("waiting", "waiting");
         telemetry.update();
         sleep(100);
 
+        robot.csServo.setPosition(.25);
 
-        GoBackSlow(12);
-        sleep(250);
-        GoBackSlow(18);
+        GoBackSlow(13);
         sleep(250);
         GoBackSlow(19);
+        sleep(250);
+        GoBackSlow(18);
         sleep(250);
 
 
@@ -234,7 +235,7 @@ public class AutoCornerColor extends LinearOpMode {
 
       //  TurnLeft(25);
 
-        GO(40);
+        GO(50);
 
         TurnRight(35);
 
