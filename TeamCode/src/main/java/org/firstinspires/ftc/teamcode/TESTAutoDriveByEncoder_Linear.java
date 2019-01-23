@@ -65,6 +65,7 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
+//Old autonomous facing crater (w/o color path)
 @Autonomous(name = "Auto facing crater", group = "Pushbot")
 //@Disabled
 public class TESTAutoDriveByEncoder_Linear extends LinearOpMode {

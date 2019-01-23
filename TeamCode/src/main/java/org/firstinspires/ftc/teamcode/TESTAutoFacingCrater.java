@@ -63,6 +63,7 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
+//NEW autonomous facing the crater (w/ color path)
 @Autonomous(name = "TEST Auto facing crater", group = "Pushbot")
 //@Disabled
 public class TESTAutoFacingCrater extends LinearOpMode {
@@ -70,6 +71,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
     /* Declare OpMode members. */
     HardwareMap robot = new HardwareMap();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
+    int max = 30;
+    int min = 21;
 
    /* static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
@@ -199,7 +202,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         GoBack(8.75);
 
-        if ((robot.color1.blue() < 30 && robot.color1.blue() > 21) || (robot.color2.blue() < 30 && robot.color2.blue() > 21))
+        if ((robot.color1.blue() < max && robot.color1.blue() > min) || (robot.color2.blue() < max && robot.color2.blue() > min))
         {
             robot.csServo.setPosition(.1);
             sleep(250);
@@ -211,7 +214,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
             GoBack(18);
             sleep(250);
 
-            if ((robot.color1.blue() < 30 && robot.color1.blue() > 21) || (robot.color2.blue() < 30 && robot.color2.blue() > 21))
+            if ((robot.color1.blue() < max && robot.color1.blue() > min) || (robot.color2.blue() < max && robot.color2.blue() > min))
             {
                 robot.csServo.setPosition(.1);
                 sleep(250);
@@ -245,9 +248,11 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         robot.mServo.setPosition(.75);
 
-  //      TurnRight(5);
+        TurnRight(5);
 
         GoBackFast(84);
+
+
 
 /*
         TurnRight(24);

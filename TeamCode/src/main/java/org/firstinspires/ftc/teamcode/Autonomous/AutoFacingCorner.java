@@ -63,6 +63,7 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
+//Original autonomous facing the depot (no color path)
 @Autonomous(name = "Auto facing marker", group = "Pushbot")
 //@Disabled
 public class AutoFacingCorner extends LinearOpMode {

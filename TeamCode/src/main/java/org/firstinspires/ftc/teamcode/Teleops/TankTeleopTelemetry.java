@@ -50,6 +50,7 @@ import com.qualcomm.robotcore.hardware.DcMotor;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
+//Telemtry added to tele-op for testing
 @TeleOp(name="Telemetry Telop", group="BACON")
 //@Disabled
 public class TankTeleopTelemetry extends LinearOpMode {

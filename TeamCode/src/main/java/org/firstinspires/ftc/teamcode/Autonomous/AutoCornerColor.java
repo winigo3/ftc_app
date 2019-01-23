@@ -63,6 +63,7 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
+//NEW autonomous facing the depot (w/ color path)
 @Autonomous(name = "TEST Depot Autonomous", group = "Pushbot")
 //@Disabled
 public class AutoCornerColor extends LinearOpMode {
@@ -70,8 +71,10 @@ public class AutoCornerColor extends LinearOpMode {
     /* Declare OpMode members. */
     HardwareMap robot = new HardwareMap();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
+    int max = 23;
+    int min = 15;
 
-   /* static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
+    /*static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
@@ -137,7 +140,7 @@ public class AutoCornerColor extends LinearOpMode {
 
         telemetry.update();
 
-        TurnRight(30);
+
 /*
         robot.leftDrive.setPower(.5);
         sleep(500);
@@ -169,29 +172,61 @@ public class AutoCornerColor extends LinearOpMode {
         robot.rightDrive.setPower(0);
         robot.leftDrive.setPower(0);
 */
-
-        GO(20);
-
-        TurnRight(26);
+        TurnRight(35);
 
         telemetry.addData("waiting", "waiting");
         telemetry.update();
         sleep(100);
 
+
+        GO(24);
+
+        TurnRight(24);
+
         robot.csServo.setPosition(.25);
 
-        GoBackSlow(8);
-        sleep(250);
+        //Math.max(robot.color1.blue(), robot.color2.blue());
+
+        GoBackSlow(11);
+
+//      max = 25, min = 15
+        if (Math.max(robot.color1.blue(), robot.color2.blue()) < max && Math.max(robot.color1.blue(), robot.color2.blue()) > min)
+        {
+            robot.csServo.setPosition(.1);
+            sleep(250);
+            robot.csServo.setPosition(.8);
+            GO(20);
+        }
+        else
+        {
+            GoBackSlow(19);
+            sleep(250);
+
+            if (Math.max(robot.color1.blue(), robot.color2.blue()) < max && Math.max(robot.color1.blue(), robot.color2.blue()) > min)
+            {
+                robot.csServo.setPosition(.1);
+                sleep(250);
+                robot.csServo.setPosition(.8);
+                GO(42);
+            }
+            else
+            {
+                GoBackSlow(21);
+                sleep(250);
+                robot.csServo.setPosition(.1);
+                sleep(500);
+                robot.csServo.setPosition(.8);
+                GO(55);
+            }
+        }
+
+
+/*      sleep(250);
         GoBackSlow(19);
         sleep(250);
         GoBackSlow(19);
         sleep(250);
-
-
-//        TurnRight(24);
-//        sleep(550);
-
-        //GoBack(1);
+*/
 
         robot.csServo.setPosition(.7);
         telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
@@ -201,45 +236,14 @@ public class AutoCornerColor extends LinearOpMode {
         telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
         telemetry.update();
 
-/*
-        if (robot.color1.blue() < 15)
-        {
-            robot.csServo.setPosition(0);
-            sleep(300);
-            robot.csServo.setPosition(1);
-        }
-        else
-        {
-            GoBack(16.971);
-            sleep(300);
-        }
-
-        if (robot.color1.blue() < 15)
-        {
-            robot.csServo.setPosition(0);
-            sleep(300);
-            robot.csServo.setPosition(1);
-            GO(16.971);
-        }
-        else
-        {
-            GoBack(16.971);
-            sleep(500);
-            robot.csServo.setPosition(0);
-            sleep(300);
-            robot.csServo.setPosition(1);
-            sleep(300);
-            GO(2*16.971+5);
-        }
-*/
 
       //  TurnLeft(25);
 
-        GO(60);
+//        GO(70);
+//-------------------------------------------------------------
+        TurnRight(35);
 
-        TurnRight(33);
-
-        GoBack(50);
+        GoBack(60);
 
         //TurnRight(-5);
 
@@ -248,6 +252,7 @@ public class AutoCornerColor extends LinearOpMode {
         robot.mServo.setPosition(0.2);
 
         GoBack(80);
+//--------------------------------------------------
 
 //-----        GoBack(85);
 
