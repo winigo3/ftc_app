@@ -29,6 +29,8 @@
 
 package org.firstinspires.ftc.teamcode.Teleops;
 
+import com.qualcomm.hardware.bosch.BNO055IMU;
+import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -62,6 +64,7 @@ public class HardwareMap
     public ColorSensor color1 = null;
     public ColorSensor color2 = null;
     public Servo mServo = null;
+    public BNO055IMU imu;
 
     //public Servo cs2Servo = null;
 
@@ -95,11 +98,21 @@ public class HardwareMap
         csServo.setPosition(.9);
         mServo = hwMap.servo.get("ms");
         mServo.setPosition(.8);
-
         color2 = hwMap.colorSensor.get("c2");
-        //cs2Servo.setPosition(.8);
-
         color1 = hwMap.colorSensor.get("c1");
+        BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
+        parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
+        parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
+        parameters.calibrationDataFile = "BNO055IMUCalibration.json"; // see the calibration sample opmode
+        parameters.loggingEnabled      = true;
+        parameters.loggingTag          = "IMU";
+        parameters.accelerationIntegrationAlgorithm = new JustLoggingAccelerationIntegrator();
+
+        // Retrieve and initialize the IMU. We expect the IMU to be attached to an I2C port
+        // on a Core Device Interface Module, configured to be a sensor of type "AdaFruit IMU",
+        // and named "imu".
+        imu = hwMap.get(BNO055IMU.class, "imu");
+        imu.initialize(parameters);
         leftDrive.setDirection(DcMotor.Direction.REVERSE);
 
         // Set all motors to zero power

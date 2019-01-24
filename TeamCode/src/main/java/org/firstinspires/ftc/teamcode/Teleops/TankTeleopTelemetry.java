@@ -100,7 +100,7 @@ public class TankTeleopTelemetry extends LinearOpMode {
             robot.rightDrive.setPower(right);
 
             if(gamepad1.dpad_down)
-                robot.csServo.setPosition(.25);
+                robot.csServo.setPosition(.2);
 
 
             //   Use gamepad bumpers to raise and lower the arm

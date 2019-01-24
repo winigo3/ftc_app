@@ -232,7 +232,7 @@ public class TESTAutoDriveByEncoder_Linear extends LinearOpMode {
         GO(2*16.971+5);
 */
 
-        TurnRight(22); //25
+//        TurnRight(22); //25
 
         GO(73);
 

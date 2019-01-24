@@ -71,8 +71,8 @@ public class AutoCornerColor extends LinearOpMode {
     /* Declare OpMode members. */
     HardwareMap robot = new HardwareMap();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
-    int max = 23;
-    int min = 15;
+    int max = 36;
+    int min = 21;
 
     /*static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP

@@ -34,6 +34,10 @@ import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
 
 /**
@@ -71,8 +75,12 @@ public class TESTAutoFacingCrater extends LinearOpMode {
     /* Declare OpMode members. */
     HardwareMap robot = new HardwareMap();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
-    int max = 30;
-    int min = 21;
+    int max = 36;
+    int min = 25;
+    double globalAngle = 0;
+    Orientation lastAngles = new Orientation();
+
+    Orientation angles;
 
    /* static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
@@ -178,18 +186,26 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.leftDrive.setPower(0);
 */
 
-        TurnRight(35);
+        TurnRight(25);
 
-        telemetry.addData("waiting", "waiting");
-        telemetry.update();
-        sleep(100);
+//        rotate(41.4375, .1);
 
+        angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-        GO(24); //14
+/*
+        while(angles.firstAngle != 41) {
+            telemetry.addData("Working", "Angle: %7d", (int)angles.firstAngle);
+            telemetry.update();
+            sleep(3000);
+            rotate(41-angles.firstAngle, 0.01);
+            angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        }
+*/
+        GO(25); //14
 
-        TurnRight(23);
+        TurnRight(18.5);
 
-        robot.csServo.setPosition(.25);
+        robot.csServo.setPosition(.2);
   //      robot.cs2Servo.setPosition(.5);
 /*
         GoBack(14);
@@ -200,7 +216,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(500);
 */
 
-        GoBack(8.75);
+        GoBack(9);
 
         if ((robot.color1.blue() < max && robot.color1.blue() > min) || (robot.color2.blue() < max && robot.color2.blue() > min))
         {
@@ -211,7 +227,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         }
         else
         {
-            GoBack(18);
+            GoBack(19);
             sleep(250);
 
             if ((robot.color1.blue() < max && robot.color1.blue() > min) || (robot.color2.blue() < max && robot.color2.blue() > min))
@@ -219,16 +235,16 @@ public class TESTAutoFacingCrater extends LinearOpMode {
                 robot.csServo.setPosition(.1);
                 sleep(250);
                 robot.csServo.setPosition(.8);
-                GO(35);
+                GO(40);
             }
             else
             {
-                GoBack(20);
+                GoBack(21);
                 sleep(250);
                 robot.csServo.setPosition(.1);
                 sleep(500);
                 robot.csServo.setPosition(.8);
-                GO(49);
+                GO(60);
             }
         }
 
@@ -238,7 +254,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
 //        GO(49);
        // sleep(200);
-        TurnRight(33);
+        TurnRight(20);
        // sleep(200);
         GO(52);
        // sleep(200);
@@ -248,71 +264,16 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         robot.mServo.setPosition(.75);
 
-        TurnRight(5);
+//        TurnRight(5);
 
         GoBackFast(84);
 
 
 
 /*
-        TurnRight(24);
-        sleep(500);
-
-
-
-   //     GoBack(3);
-
-        robot.csServo.setPosition(1);
-        telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
-        telemetry.update();
-      //  robot.csServo.setPosition(0.25);
-        sleep(250);
-        telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
-        telemetry.update();
-
-
-        /*
-        if (robot.color1.blue() < 15)
-        {
-            robot.csServo.setPosition(.25);
-            sleep(250);
-            robot.csServo.setPosition(1);
-        }
-        else
-        {
-            GoBack(16.971);
-            sleep(250);
-        }
-
-        if (robot.color1.blue() < 15)
-        {
-            robot.csServo.setPosition(.25);
-            sleep(250);
-            robot.csServo.setPosition(1);
-            GO(16.971);
-        }
-        else
-        {
-            GoBack(16.971);
-            sleep(250);
-            robot.csServo.setPosition(.25);
-            sleep(500);
-            GO(2*16.971+5);
-        }
-*/
-/*
-        GoBack(16.971);
-        sleep(250);
-        GoBack(16.971);
-        sleep(250);
-        GO(2*16.971+5);
-
-
         TurnRight(22); //25
 
         GO(73);
-
-
 
         robot.mServo.setPosition(0.1);
 
@@ -328,6 +289,15 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
 
     }
+
+    public void CorrectAngle(double target, double current)
+    {
+        if(target - current > 0)
+            rotate(target-current, 0.1);
+        else if(target - current < 0)
+            rotate(target-current, 0.1);
+    }
+
 
     public void GO(double inches)
     {
@@ -453,7 +423,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
-    public void TurnLeft(int degrees)
+    public void TurnLeft(double degrees)
     {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -467,8 +437,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(.05);
-        robot.leftDrive.setPower(-.05);
+        robot.rightDrive.setPower(.1);
+        robot.leftDrive.setPower(-.1);
 
         while (robot.leftDrive.getCurrentPosition() > degrees*24.444) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -491,6 +461,86 @@ public class TESTAutoFacingCrater extends LinearOpMode {
      *  2) Move runs out of time
      *  3) Driver stops the opmode running.
      */
+
+    private void resetAngle() {
+        lastAngles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        globalAngle = 0;
+    }
+
+    private double getAngle() {
+
+        // We experimentally determined the Z axis is the axis we want to use for heading angle.
+        // We have to process the angle because the imu works in euler angles so the Z axis is
+        // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
+        // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
+
+
+        Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
+
+        if (deltaAngle < -180)
+            deltaAngle += 360;
+        else if (deltaAngle > 180)
+            deltaAngle -= 360;
+
+        globalAngle += deltaAngle;
+
+        lastAngles = angles;
+
+        return globalAngle;
+    }
+
+    /**
+     * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
+     *
+     * @param degrees Degrees to turn, + is left - is right
+     */
+    private void rotate(double degrees, double power) {
+        double leftPower, rightPower;
+
+        // restart imu movement tracking.
+        resetAngle();
+
+        // getAngle() returns + when rotating counter clockwise (left) and - when rotating
+        // clockwise (right).
+
+        if (degrees < 0) {   // turn right.
+            leftPower = -power;
+            rightPower = power;
+        } else if (degrees > 0) {   // turn left.
+            leftPower = power;
+            rightPower = -power;
+        } else return;
+
+        // set power to rotate.
+        robot.leftDrive.setPower(leftPower);
+        robot.rightDrive.setPower(rightPower);
+
+        // rotate until turn is completed.
+        if (degrees < 0) {
+            // On right turn we have to get off zero first.
+            while (opModeIsActive() && getAngle() == 0) {
+            }
+
+            while (opModeIsActive() && getAngle() > degrees) {
+            }
+        } else    // left turn.
+            while (opModeIsActive() && getAngle() < degrees) {
+            }
+
+        // turn the motors off.
+        robot.rightDrive.setPower(0);
+        robot.leftDrive.setPower(0);
+
+
+        // wait for rotation to stop.
+        sleep(1000);
+
+        // reset angle tracking on new heading.
+        resetAngle();
+    }
+
 
 }
 

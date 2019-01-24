@@ -36,6 +36,10 @@ import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
 import org.firstinspires.ftc.robotcontroller.external.samples.HardwareK9bot;
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
+import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
+import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 /**
  * This OpMode uses the common HardwareK9bot class to define the devices on the robot.
@@ -59,6 +63,10 @@ import org.firstinspires.ftc.robotcontroller.external.samples.HardwareK9bot;
 //@Disabled
 public class TeleopTank_Drive extends LinearOpMode {
 
+
+
+    double globalAngle = 0;
+    Orientation lastAngles = new Orientation();
     /* Declare OpMode members. */
     HardwareMap robot = new HardwareMap();              // Use a K9'shardware
     //double          armPosition     = robot.ARM_HOME;                   // Servo safe position
@@ -70,7 +78,8 @@ public class TeleopTank_Drive extends LinearOpMode {
     public void runOpMode() {
         double left;
         double right;
-        double arm;
+
+
 
         /* Initialize the hardware variables.
          * The init() method of the hardware class does all the work here
@@ -123,14 +132,20 @@ public class TeleopTank_Drive extends LinearOpMode {
 
 
             if (gamepad1.dpad_down)
-                robot.csServo.setPosition(0.25);
+                robot.csServo.setPosition(0.2);
             if (gamepad1.dpad_up)
-                robot.csServo.setPosition(1);
-
-            if (gamepad2.dpad_down)
-                robot.csServo.setPosition(.25);
-            if(gamepad2.dpad_up)
                 robot.csServo.setPosition(.8);
+
+            if(gamepad2.a)
+                rotate(180, 0.5);    //did not stop spinning
+            if(gamepad2.b)
+                rotate(45, 0.5);
+            if(gamepad2.y)
+                rotate(90, 0.5);
+            if(gamepad2.x)
+                rotate(135, 0.5);
+
+
 
 /*            if (gamepad2.b)
                 robot.cs2Servo.setPosition(.25);
@@ -173,6 +188,90 @@ public class TeleopTank_Drive extends LinearOpMode {
 */
             sleep(40);
         }
+    }
+
+    /**
+     * Get current cumulative angle rotation from last reset.
+     *
+     * @return Angle in degrees. + = left, - = right.
+     */
+    private void resetAngle() {
+        lastAngles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+        globalAngle = 0;
+    }
+
+    private double getAngle() {
+
+        // We experimentally determined the Z axis is the axis we want to use for heading angle.
+        // We have to process the angle because the imu works in euler angles so the Z axis is
+        // returned as 0 to +180 or 0 to -180 rolling back to -179 or +179 when rotation passes
+        // 180 degrees. We detect this transition and track the total cumulative angle of rotation.
+
+
+        Orientation angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        double deltaAngle = angles.firstAngle - lastAngles.firstAngle;
+
+        if (deltaAngle < -180)
+            deltaAngle += 360;
+        else if (deltaAngle > 180)
+            deltaAngle -= 360;
+
+        globalAngle += deltaAngle;
+
+        lastAngles = angles;
+
+        return globalAngle;
+    }
+
+    /**
+     * Rotate left or right the number of degrees. Does not support turning more than 180 degrees.
+     *
+     * @param degrees Degrees to turn, + is left - is right
+     */
+    private void rotate(int degrees, double power) {
+        double leftPower, rightPower;
+
+        // restart imu movement tracking.
+        resetAngle();
+
+        // getAngle() returns + when rotating counter clockwise (left) and - when rotating
+        // clockwise (right).
+
+        if (degrees < 0) {   // turn right.
+            leftPower = power;
+            rightPower = -power;
+        } else if (degrees > 0) {   // turn left.
+            leftPower = -power;
+            rightPower = power;
+        } else return;
+
+        // set power to rotate.
+        robot.leftDrive.setPower(leftPower);
+        robot.rightDrive.setPower(rightPower);
+
+        // rotate until turn is completed.
+        if (degrees < 0) {
+            // On right turn we have to get off zero first.
+            while (opModeIsActive() && getAngle() == 0) {
+            }
+
+            while (opModeIsActive() && getAngle() > degrees) {
+            }
+        } else    // left turn.
+            while (opModeIsActive() && getAngle() < degrees) {
+            }
+
+        // turn the motors off.
+        robot.rightDrive.setPower(0);
+        robot.leftDrive.setPower(0);
+
+
+        // wait for rotation to stop.
+        sleep(1000);
+
+        // reset angle tracking on new heading.
+        resetAngle();
     }
 
 }
