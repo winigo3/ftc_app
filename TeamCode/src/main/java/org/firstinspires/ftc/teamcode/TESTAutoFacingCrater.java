@@ -75,7 +75,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
     /* Declare OpMode members. */
     HardwareMap robot = new HardwareMap();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
-    int max = 36;
+    int max = 35;
     int min = 25;
     double globalAngle = 0;
     Orientation lastAngles = new Orientation();
@@ -185,13 +185,17 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.rightDrive.setPower(0);
         robot.leftDrive.setPower(0);
 */
-
-        TurnRight(25);
-
-//        rotate(41.4375, .1);
-
         angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
+        TurnRight(25);
+   //     rotate(25, 1);
+
+/*
+        telemetry.addData("imu angle: ", angles.firstAngle);
+        telemetry.update();
+
+        sleep(3000);
+*/
 /*
         while(angles.firstAngle != 41) {
             telemetry.addData("Working", "Angle: %7d", (int)angles.firstAngle);
@@ -201,9 +205,9 @@ public class TESTAutoFacingCrater extends LinearOpMode {
             angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         }
 */
-        GO(25); //14
+        GO(25.5); //14
 
-        TurnRight(18.5);
+        TurnRight(19.5);
 
         robot.csServo.setPosition(.2);
   //      robot.cs2Servo.setPosition(.5);
@@ -216,45 +220,40 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(500);
 */
 
-        GoBack(9);
+        GoBack(5);
 
-        if ((robot.color1.blue() < max && robot.color1.blue() > min) || (robot.color2.blue() < max && robot.color2.blue() > min))
+        // (robot.color1.blue() < max && robot.color1.blue() > min) || (robot.color2.blue() < max && robot.color2.blue() > min)
+
+        if (Math.max(robot.color1.blue(), robot.color2.blue()) < max && Math.max(robot.color1.blue(), robot.color2.blue()) > min)
         {
-            robot.csServo.setPosition(.1);
-            sleep(250);
-            robot.csServo.setPosition(.8);
-            GO(12);
+            knock();
+            GO(18);
         }
         else
         {
             GoBack(19);
             sleep(250);
 
-            if ((robot.color1.blue() < max && robot.color1.blue() > min) || (robot.color2.blue() < max && robot.color2.blue() > min))
+            if (Math.max(robot.color1.blue(), robot.color2.blue()) < max && Math.max(robot.color1.blue(), robot.color2.blue()) > min)
             {
-                robot.csServo.setPosition(.1);
-                sleep(250);
-                robot.csServo.setPosition(.8);
-                GO(40);
+                knock();
+                GO(50);
             }
             else
             {
-                GoBack(21);
+                GoBack(21.5);
                 sleep(250);
-                robot.csServo.setPosition(.1);
-                sleep(500);
-                robot.csServo.setPosition(.8);
-                GO(60);
+                knock();
+                GO(70);
             }
         }
-
 
 
         robot.csServo.setPosition(.75);
 
 //        GO(49);
        // sleep(200);
-        TurnRight(20);
+        TurnRight(17.5);
        // sleep(200);
         GO(52);
        // sleep(200);
@@ -264,38 +263,24 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         robot.mServo.setPosition(.75);
 
-//        TurnRight(5);
+        TurnRight(5);
 
-        GoBackFast(84);
+        GoBackFast(95);
+
+        robot.csServo.setPosition(.3);
 
 
-
-/*
-        TurnRight(22); //25
-
-        GO(73);
-
-        robot.mServo.setPosition(0.1);
-
-        TurnRight(17); //17
-
-        GoBack(90); //85
-
-        robot.leftDrive.setPower(.25);
-        sleep(100);
-        robot.leftDrive.setPower(0);
-*/
         sleep(10000);
-
 
     }
 
-    public void CorrectAngle(double target, double current)
+    public void knock()
     {
-        if(target - current > 0)
-            rotate(target-current, 0.1);
-        else if(target - current < 0)
-            rotate(target-current, 0.1);
+        TurnLeft(5);
+        robot.csServo.setPosition(.1);
+        sleep(250);
+        TurnRight(5);
+        robot.csServo.setPosition(.8);
     }
 
 
@@ -304,8 +289,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
                 robot.rightDrive.getCurrentPosition(),
@@ -313,8 +298,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(1);
-        robot.leftDrive.setPower(1);
+        robot.rightDrive.setPower(.75);
+        robot.leftDrive.setPower(.75);
 
         while (robot.leftDrive.getCurrentPosition() > -inches*47.619) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -398,8 +383,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
                 robot.rightDrive.getCurrentPosition(),
@@ -407,8 +392,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(-.1);
-        robot.leftDrive.setPower(.1);
+        robot.rightDrive.setPower(-.35);
+        robot.leftDrive.setPower(.35);
 
         while (robot.leftDrive.getCurrentPosition() > -degrees*24.444) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -428,8 +413,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
                 robot.rightDrive.getCurrentPosition(),
@@ -437,10 +422,10 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(.1);
-        robot.leftDrive.setPower(-.1);
+        robot.rightDrive.setPower(.35);
+        robot.leftDrive.setPower(-.35);
 
-        while (robot.leftDrive.getCurrentPosition() > degrees*24.444) {
+        while (robot.leftDrive.getCurrentPosition() < degrees*24.444) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                     robot.leftDrive.getCurrentPosition(),
                     robot.rightDrive.getCurrentPosition(),
@@ -514,8 +499,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         } else return;
 
         // set power to rotate.
-        robot.leftDrive.setPower(leftPower);
-        robot.rightDrive.setPower(rightPower);
+        robot.leftDrive.setPower(leftPower/5);
+        robot.rightDrive.setPower(rightPower/5);
 
         // rotate until turn is completed.
         if (degrees < 0) {

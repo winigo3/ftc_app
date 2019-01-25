@@ -67,6 +67,7 @@ public class TeleopTank_Drive extends LinearOpMode {
 
     double globalAngle = 0;
     Orientation lastAngles = new Orientation();
+    Orientation angles;
     /* Declare OpMode members. */
     HardwareMap robot = new HardwareMap();              // Use a K9'shardware
     //double          armPosition     = robot.ARM_HOME;                   // Servo safe position
@@ -106,6 +107,8 @@ public class TeleopTank_Drive extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
+
+
             // Run wheels in tank mode (note: The joystick goes negative when pushed forwards, so negate it)
             left = gamepad1.left_stick_y;
             right = gamepad1.right_stick_y;
@@ -135,7 +138,7 @@ public class TeleopTank_Drive extends LinearOpMode {
                 robot.csServo.setPosition(0.2);
             if (gamepad1.dpad_up)
                 robot.csServo.setPosition(.8);
-
+/*
             if(gamepad2.a)
                 rotate(180, 0.5);    //did not stop spinning
             if(gamepad2.b)
@@ -144,14 +147,14 @@ public class TeleopTank_Drive extends LinearOpMode {
                 rotate(90, 0.5);
             if(gamepad2.x)
                 rotate(135, 0.5);
-
-
-
-/*            if (gamepad2.b)
-                robot.cs2Servo.setPosition(.25);
-            if (gamepad2.x)
-                robot.cs2Servo.setPosition(.8);
 */
+
+
+            if (gamepad2.b)
+                TurnLeft(45);
+            if (gamepad2.x)
+                TurnRight(45);
+
                // robot.rightDrive.setPower(0);
 
            /* if (gamepad1.right_bumper)
@@ -185,6 +188,11 @@ public class TeleopTank_Drive extends LinearOpMode {
 
 
             //Pause for 40 mS each cycle = update 25 times a second.
+*/
+       //     angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+/*
+            telemetry.addData("imu angle: ", angles.firstAngle);
+            telemetry.update();
 */
             sleep(40);
         }
@@ -272,6 +280,65 @@ public class TeleopTank_Drive extends LinearOpMode {
 
         // reset angle tracking on new heading.
         resetAngle();
+    }
+
+    public void TurnRight(double degrees)
+    {
+        robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
+                robot.leftDrive.getCurrentPosition(),
+                robot.rightDrive.getCurrentPosition(),
+                robot.armMotor.getCurrentPosition());
+        telemetry.update();
+        sleep(1000);
+
+        robot.rightDrive.setPower(-.35);
+        robot.leftDrive.setPower(.35);
+
+        while (robot.leftDrive.getCurrentPosition() > -degrees*24.444) {
+            telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
+                    robot.leftDrive.getCurrentPosition(),
+                    robot.rightDrive.getCurrentPosition(),
+                    robot.armMotor.getCurrentPosition());
+            telemetry.update();
+        }
+        robot.rightDrive.setPower(0);
+        robot.leftDrive.setPower(0);
+        robot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+    }
+
+    public void TurnLeft(int degrees) {
+        robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
+                robot.leftDrive.getCurrentPosition(),
+                robot.rightDrive.getCurrentPosition(),
+                robot.armMotor.getCurrentPosition());
+        telemetry.update();
+        sleep(1000);
+
+        robot.rightDrive.setPower(.35);
+        robot.leftDrive.setPower(-.35);
+
+        while (robot.leftDrive.getCurrentPosition() < degrees*24.444) {
+            telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
+                    robot.leftDrive.getCurrentPosition(),
+                    robot.rightDrive.getCurrentPosition(),
+                    robot.armMotor.getCurrentPosition());
+            telemetry.update();
+        }
+        robot.rightDrive.setPower(0);
+        robot.leftDrive.setPower(0);
+        robot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
     }
 
 }

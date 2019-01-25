@@ -78,16 +78,20 @@ public class TankTeleopTelemetry extends LinearOpMode {
         telemetry.addData("Say", "Hello Driver");
         telemetry.update();
         //robot.armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
-        //robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        //robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //robot.rightDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         //robot.leftDrive.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Wait for the game to start (driver presses PLAY)
+
+
+
         waitForStart();
 
         // run until the end of the match (driver presses STOP)
@@ -135,21 +139,21 @@ public class TankTeleopTelemetry extends LinearOpMode {
                     */
             //telemetry.addData("left", "%.2f", left);
             //telemetry.addData("right", "%.2f", right);
- /*           telemetry.addData("Working",  "Left: %7d Right: %7d Arm: %7d" ,
+            telemetry.addData("Working",  "Left: %7d Right: %7d Arm: %7d" ,
                     robot.leftDrive.getCurrentPosition(),
                     robot.rightDrive.getCurrentPosition(),
                     robot.armMotor.getCurrentPosition());
-            telemetry.update();
-*/
-            telemetry.update();
-            telemetry.addData("Alpha 1", robot.color1.alpha());
+//            telemetry.update();
+
+//            telemetry.update();
+/*            telemetry.addData("Alpha 1", robot.color1.alpha());
             telemetry.addData("Red 1", robot.color1.red());
             telemetry.addData("Green 1", robot.color1.green());
-            telemetry.addData("Blue 1", robot.color1.blue());
-            telemetry.addData("Alpha 2", robot.color2.alpha());
+*/            telemetry.addData("Blue 1", robot.color1.blue());
+/*            telemetry.addData("Alpha 2", robot.color2.alpha());
             telemetry.addData("Red 2", robot.color2.red());
             telemetry.addData("Green 2", robot.color2.green());
-            telemetry.addData("Blue 2", robot.color2.blue());
+*/            telemetry.addData("Blue 2", robot.color2.blue());
             telemetry.update();
             //Pause for 40 mS each cycle = update 25 times a second.
 

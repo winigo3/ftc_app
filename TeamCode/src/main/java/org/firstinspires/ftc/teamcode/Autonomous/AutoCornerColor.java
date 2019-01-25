@@ -71,8 +71,8 @@ public class AutoCornerColor extends LinearOpMode {
     /* Declare OpMode members. */
     HardwareMap robot = new HardwareMap();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
-    int max = 36;
-    int min = 21;
+    int max = 31;
+    int min = 20;
 
     /*static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
@@ -172,61 +172,48 @@ public class AutoCornerColor extends LinearOpMode {
         robot.rightDrive.setPower(0);
         robot.leftDrive.setPower(0);
 */
-        TurnRight(35);
+        TurnRight(25);
 
         telemetry.addData("waiting", "waiting");
         telemetry.update();
         sleep(100);
 
 
-        GO(24);
+        GO(25.5);
 
-        TurnRight(24);
+        TurnRight(18.5);
 
-        robot.csServo.setPosition(.25);
+        robot.csServo.setPosition(.2);
 
         //Math.max(robot.color1.blue(), robot.color2.blue());
 
-        GoBackSlow(11);
+        GoBackSlow(5);
 
-//      max = 25, min = 15
+
         if (Math.max(robot.color1.blue(), robot.color2.blue()) < max && Math.max(robot.color1.blue(), robot.color2.blue()) > min)
         {
-            robot.csServo.setPosition(.1);
-            sleep(250);
-            robot.csServo.setPosition(.8);
-            GO(20);
+          knock();
+          GO(18);
         }
         else
         {
-            GoBackSlow(19);
+            GoBackSlow(20);
             sleep(250);
 
             if (Math.max(robot.color1.blue(), robot.color2.blue()) < max && Math.max(robot.color1.blue(), robot.color2.blue()) > min)
             {
-                robot.csServo.setPosition(.1);
-                sleep(250);
-                robot.csServo.setPosition(.8);
-                GO(42);
+                knock();
+                GO(50);
             }
             else
             {
-                GoBackSlow(21);
+                GoBackSlow(21.5);
                 sleep(250);
-                robot.csServo.setPosition(.1);
-                sleep(500);
-                robot.csServo.setPosition(.8);
-                GO(55);
+                knock();
+                GO(70);
             }
         }
 
-
-/*      sleep(250);
-        GoBackSlow(19);
-        sleep(250);
-        GoBackSlow(19);
-        sleep(250);
-*/
 
         robot.csServo.setPosition(.7);
         telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
@@ -240,10 +227,12 @@ public class AutoCornerColor extends LinearOpMode {
       //  TurnLeft(25);
 
 //        GO(70);
-//-------------------------------------------------------------
-        TurnRight(35);
+//------------------------------------------------------------- //Within the dashed lines is the path after sampling (knocking the mineral)
+        TurnLeft(17);
+        sleep(250);
 
-        GoBack(60);
+
+ /*       GoBack(60);
 
         //TurnRight(-5);
 
@@ -252,17 +241,19 @@ public class AutoCornerColor extends LinearOpMode {
         robot.mServo.setPosition(0.2);
 
         GoBack(80);
-//--------------------------------------------------
+/--------------------------------------------------*/
 
-//-----        GoBack(85);
-
-//        TurnRight(45);
-
-//        GoBack(36);
-
-//        GO(74);
 
         sleep(15000);
+    }
+
+    public void knock()
+    {
+        TurnLeft(5);
+        robot.csServo.setPosition(.1);
+        sleep(250);
+        TurnRight(5);
+        robot.csServo.setPosition(.8);
     }
 
     public void GO(double inches)
@@ -270,8 +261,8 @@ public class AutoCornerColor extends LinearOpMode {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
                 robot.rightDrive.getCurrentPosition(),
@@ -279,8 +270,8 @@ public class AutoCornerColor extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(1);
-        robot.leftDrive.setPower(1);
+        robot.rightDrive.setPower(.75);
+        robot.leftDrive.setPower(.75);
 
         while (robot.leftDrive.getCurrentPosition() > -inches*47.619) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -362,8 +353,8 @@ public class AutoCornerColor extends LinearOpMode {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
-        robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        robot.leftDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightDrive.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                 robot.leftDrive.getCurrentPosition(),
                 robot.rightDrive.getCurrentPosition(),
@@ -371,8 +362,8 @@ public class AutoCornerColor extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(-.1);
-        robot.leftDrive.setPower(.1);
+        robot.rightDrive.setPower(-.35);
+        robot.leftDrive.setPower(.35);
 
         while (robot.leftDrive.getCurrentPosition() > -degrees*24.444) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -400,10 +391,10 @@ public class AutoCornerColor extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(.1);
-        robot.leftDrive.setPower(-.1);
+        robot.rightDrive.setPower(.35);
+        robot.leftDrive.setPower(-.35);
 
-        while (robot.leftDrive.getCurrentPosition() > degrees*24.444) {
+        while (robot.leftDrive.getCurrentPosition() < degrees*24.444) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                     robot.leftDrive.getCurrentPosition(),
                     robot.rightDrive.getCurrentPosition(),
