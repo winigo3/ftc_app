@@ -68,16 +68,17 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
  */
 
 //NEW autonomous facing the crater (w/ color path)
-@Autonomous(name = "TEST Auto facing crater", group = "Pushbot")
+@Autonomous(name = "80 point crater side", group = "Pushbot")
 //@Disabled
 public class TESTAutoFacingCrater extends LinearOpMode {
 
     /* Declare OpMode members. */
     HardwareMap robot = new HardwareMap();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
-    int max = 35;
-    int min = 25;
+    int max = 40;
+    int min = 27;
     double globalAngle = 0;
+    boolean cutoff = false;
     Orientation lastAngles = new Orientation();
 
     Orientation angles;
@@ -205,9 +206,9 @@ public class TESTAutoFacingCrater extends LinearOpMode {
             angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         }
 */
-        GO(25.5); //14
+        GO(26.5, .75); //14
 
-        TurnRight(19.5);
+        TurnRight(18.5);
 
         robot.csServo.setPosition(.2);
   //      robot.cs2Servo.setPosition(.5);
@@ -220,14 +221,14 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(500);
 */
 
-        GoBack(5);
+        GoBack(5.5);
 
         // (robot.color1.blue() < max && robot.color1.blue() > min) || (robot.color2.blue() < max && robot.color2.blue() > min)
 
         if (Math.max(robot.color1.blue(), robot.color2.blue()) < max && Math.max(robot.color1.blue(), robot.color2.blue()) > min)
         {
             knock();
-            GO(18);
+            GO(28, 1);
         }
         else
         {
@@ -237,14 +238,15 @@ public class TESTAutoFacingCrater extends LinearOpMode {
             if (Math.max(robot.color1.blue(), robot.color2.blue()) < max && Math.max(robot.color1.blue(), robot.color2.blue()) > min)
             {
                 knock();
-                GO(50);
+                GO(50, 1);
             }
             else
             {
                 GoBack(21.5);
                 sleep(250);
+                cutoff = true;
                 knock();
-                GO(70);
+                GO(70, 1);
             }
         }
 
@@ -253,9 +255,9 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
 //        GO(49);
        // sleep(200);
-        TurnRight(17.5);
+        TurnRight(19);
        // sleep(200);
-        GO(52);
+        GO(47, 1);
        // sleep(200);
         robot.mServo.setPosition(.2);
 
@@ -263,12 +265,16 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         robot.mServo.setPosition(.75);
 
-        TurnRight(5);
+//        TurnRight(5);
 
-        GoBackFast(95);
 
-        robot.csServo.setPosition(.3);
+        if(!cutoff) {
+            GoBackFast(90);
 
+            TurnLeft(2);
+
+            robot.csServo.setPosition(.25);
+        }
 
         sleep(10000);
 
@@ -276,15 +282,15 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
     public void knock()
     {
-        TurnLeft(5);
+        GoBack(3);
         robot.csServo.setPosition(.1);
         sleep(250);
-        TurnRight(5);
+        GO(3.5, .75);
         robot.csServo.setPosition(.8);
     }
 
 
-    public void GO(double inches)
+    public void GO(double inches, double power)
     {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -298,8 +304,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(.75);
-        robot.leftDrive.setPower(.75);
+        robot.rightDrive.setPower(power);
+        robot.leftDrive.setPower(power);
 
         while (robot.leftDrive.getCurrentPosition() > -inches*47.619) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",

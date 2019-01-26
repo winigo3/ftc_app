@@ -64,7 +64,7 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
  */
 
 //NEW autonomous facing the depot (w/ color path)
-@Autonomous(name = "TEST Depot Autonomous", group = "Pushbot")
+@Autonomous(name = "80 point depot side", group = "Pushbot")
 //@Disabled
 public class AutoCornerColor extends LinearOpMode {
 
@@ -73,6 +73,7 @@ public class AutoCornerColor extends LinearOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     int max = 31;
     int min = 20;
+    boolean cutoff = false;
 
     /*static final double     COUNTS_PER_MOTOR_REV    = 1440 ;    // eg: TETRIX Motor Encoder
     static final double     DRIVE_GEAR_REDUCTION    = 2.0 ;     // This is < 1.0 if geared UP
@@ -174,12 +175,8 @@ public class AutoCornerColor extends LinearOpMode {
 */
         TurnRight(25);
 
-        telemetry.addData("waiting", "waiting");
-        telemetry.update();
-        sleep(100);
 
-
-        GO(25.5);
+        GO(26.5);
 
         TurnRight(18.5);
 
@@ -187,18 +184,31 @@ public class AutoCornerColor extends LinearOpMode {
 
         //Math.max(robot.color1.blue(), robot.color2.blue());
 
-        GoBackSlow(5);
+        GoBackSlow(6);
 
+        /*
+        Slowly go over the first object, reading as you go
+        if (Math.max(robot.color1.blue(), robot.color2.blue()) > oldBright)
+        store the new brite value as oldBright
+
+        if not, do nothing, keep going.
+
+        After past first object, compare oldBright vs the values you want, to color check.
+
+        if not yellow, repeat until yellow
+
+        ~
+         */
 
         if (Math.max(robot.color1.blue(), robot.color2.blue()) < max && Math.max(robot.color1.blue(), robot.color2.blue()) > min)
         {
           knock();
-          GO(18);
+          GO(19);
         }
         else
         {
-            GoBackSlow(20);
-            sleep(250);
+            GoBackSlow(20.5);
+            sleep(125);
 
             if (Math.max(robot.color1.blue(), robot.color2.blue()) < max && Math.max(robot.color1.blue(), robot.color2.blue()) > min)
             {
@@ -207,41 +217,33 @@ public class AutoCornerColor extends LinearOpMode {
             }
             else
             {
-                GoBackSlow(21.5);
-                sleep(250);
+                GoBackSlow(21);
+                sleep(125);
                 knock();
+                cutoff = true;
+                TurnRight(1);
                 GO(70);
             }
         }
-
-
-        robot.csServo.setPosition(.7);
-        telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
-        telemetry.update();
-//      robot.csServo.setPosition(0.25);
-        sleep(500);
-        telemetry.addData("Servo", "Servo: %7f", robot.csServo.getPosition());
-        telemetry.update();
 
 
       //  TurnLeft(25);
 
 //        GO(70);
 //------------------------------------------------------------- //Within the dashed lines is the path after sampling (knocking the mineral)
-        TurnLeft(17);
-        sleep(250);
+        TurnLeft(52);
+        sleep(150);
 
+        GO(50);
 
- /*       GoBack(60);
-
-        //TurnRight(-5);
-
-        TurnRight(75);
 
         robot.mServo.setPosition(0.2);
 
-        GoBack(80);
-/--------------------------------------------------*/
+       if(!cutoff) {
+        TurnRight(1.5);
+        GoBack(78); }
+     //   TurnLeft(20);
+//--------------------------------------------------
 
 
         sleep(15000);
@@ -249,10 +251,10 @@ public class AutoCornerColor extends LinearOpMode {
 
     public void knock()
     {
-        TurnLeft(5);
+        GoBackSlow(3);
         robot.csServo.setPosition(.1);
         sleep(250);
-        TurnRight(5);
+        GO(3.5);
         robot.csServo.setPosition(.8);
     }
 
