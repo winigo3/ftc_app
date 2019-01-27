@@ -75,8 +75,8 @@ public class TESTAutoFacingCrater extends LinearOpMode {
     /* Declare OpMode members. */
     HardwareMap robot = new HardwareMap();   // Use a Pushbot's hardware
     private ElapsedTime runtime = new ElapsedTime();
-    int max = 40;
-    int min = 27;
+    int max = 30;
+    int min = 15;
     double globalAngle = 0;
     boolean cutoff = false;
     Orientation lastAngles = new Orientation();
@@ -206,7 +206,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
             angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         }
 */
-        GO(26.5, .75); //14
+        GO(27, .75); //14
 
         TurnRight(18.5);
 
@@ -221,7 +221,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
         sleep(500);
 */
 
-        GoBack(5.5);
+        GoBack(9.5);
 
         // (robot.color1.blue() < max && robot.color1.blue() > min) || (robot.color2.blue() < max && robot.color2.blue() > min)
 
@@ -242,7 +242,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
             }
             else
             {
-                GoBack(21.5);
+                GoBack(21);
                 sleep(250);
                 cutoff = true;
                 knock();
@@ -255,13 +255,13 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
 //        GO(49);
        // sleep(200);
-        TurnRight(19);
+        TurnRight(15);
        // sleep(200);
         GO(47, 1);
        // sleep(200);
-        robot.mServo.setPosition(.2);
+        robot.mServo.setPosition(.1);
 
-        sleep(500);
+        sleep(750);
 
         robot.mServo.setPosition(.75);
 
@@ -269,11 +269,13 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
 
         if(!cutoff) {
+            TurnRight(3.5);
+
             GoBackFast(90);
 
-            TurnLeft(2);
+         //   TurnLeft(2);
 
-            robot.csServo.setPosition(.25);
+         //   robot.csServo.setPosition(.25);
         }
 
         sleep(10000);
@@ -282,10 +284,10 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
     public void knock()
     {
-        GoBack(3);
+        GoBack(5);
         robot.csServo.setPosition(.1);
         sleep(250);
-        GO(3.5, .75);
+        GO(5.5, .75);
         robot.csServo.setPosition(.8);
     }
 
