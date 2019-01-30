@@ -118,7 +118,7 @@ public class TensorFlowTest extends LinearOpMode {
         telemetry.update();
 
         // Turn On RUN_TO_POSITION
-        //robot.leftDrive.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
         robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         robot.armMotor.setPower(1);
 
@@ -128,9 +128,7 @@ public class TensorFlowTest extends LinearOpMode {
 
         TurnRight(15);
 
-        GO(2, 0.5);
-
-        sleep(3000);
+        GO(3, 0.5);
 
         if (opModeIsActive()) {
 
@@ -150,38 +148,40 @@ public class TensorFlowTest extends LinearOpMode {
 
                             for (Recognition recognition : updatedRecognitions) {
                                 if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                                    sleep(1000);
+                                    sleep(250);
                                     telemetry.addData("gold", "1st");
-                                    path1 = true;                                             //Add the path stuff
+                                    path1 = true;
                                     GO(27.5, .5);
                                     goldFound = true;
                                 } else {
-                                    telemetry.addData("Silver", "1st");
+                                    telemetry.addData("silver", "1st");
                                 }
                             }
 
                             if(!goldFound) {
-                                sleep(1000);
-                                TurnLeft(18);
-                                sleep(2500);
+                                sleep(500);
+                                TurnLeft(17.5);
+                                sleep(5000);
 
                                 updatedRecognitions.clear();
                                 updatedRecognitions = tfod.getUpdatedRecognitions();
 
                                 for (Recognition recognition : updatedRecognitions) {
                                     if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                                        sleep(1000);
+                                        sleep(250);
                                         telemetry.addData("gold", "2nd");
+                                        path2 = true;
                                         GO(27.5, .5);
                                         goldFound = true;
                                     }
-                                    else {
-                                        telemetry.addData("silver", "2nd");
-                                        TurnLeft(20);
-                                        GO(27.5, .5);
-                                    }
                                 }
                             }
+                            if(!goldFound) {
+                                telemetry.addData("silver", "2nd");
+                                TurnLeft(20);
+                                GO(27.5, .5);
+                                path3 = true; }
+
 
                             telemetry.update();
                         }
@@ -191,8 +191,29 @@ public class TensorFlowTest extends LinearOpMode {
         }
 
         if (tfod != null) {
-            tfod.shutdown();
+            tfod.shutdown(); }
+
+        if(path1)
+        {
+            TurnRight(43);
+            telemetry.addData("path", "1st position");
+            telemetry.update();
+
         }
+        else if(path2)
+        {
+            TurnRight(43);
+            telemetry.addData("path", "2nd position");
+            telemetry.update();
+        }
+        else if(path3)
+        {
+            TurnRight(43);
+            telemetry.addData("path", "3rd position");
+            telemetry.update();
+        }
+
+
         sleep(10000);
     }
 
@@ -239,10 +260,10 @@ public class TensorFlowTest extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(-.5);
-        robot.leftDrive.setPower(.5);
+        robot.rightDrive.setPower(-.4);
+        robot.leftDrive.setPower(.4);
 
-        while (robot.leftDrive.getCurrentPosition() > -degrees*24.444) {
+        while (robot.leftDrive.getCurrentPosition() > -degrees*24.444 && opModeIsActive()) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                     robot.leftDrive.getCurrentPosition(),
                     robot.rightDrive.getCurrentPosition(),
@@ -256,7 +277,7 @@ public class TensorFlowTest extends LinearOpMode {
     }
 
 
-    public void TurnLeft(int degrees) {
+    public void TurnLeft(double degrees) {
         robot.rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         robot.leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
@@ -269,10 +290,10 @@ public class TensorFlowTest extends LinearOpMode {
         telemetry.update();
         sleep(1000);
 
-        robot.rightDrive.setPower(.35);
-        robot.leftDrive.setPower(-.35);
+        robot.rightDrive.setPower(.4);
+        robot.leftDrive.setPower(-.4);
 
-        while (robot.leftDrive.getCurrentPosition() < degrees*24.444) {
+        while (robot.leftDrive.getCurrentPosition() < degrees*24.444 && opModeIsActive()) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                     robot.leftDrive.getCurrentPosition(),
                     robot.rightDrive.getCurrentPosition(),
@@ -302,7 +323,7 @@ public class TensorFlowTest extends LinearOpMode {
         robot.rightDrive.setPower(power);
         robot.leftDrive.setPower(power);
 
-        while (robot.leftDrive.getCurrentPosition() > -inches*47.619) {
+        while (robot.leftDrive.getCurrentPosition() > -inches*47.619 && opModeIsActive()) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
                     robot.leftDrive.getCurrentPosition(),
                     robot.rightDrive.getCurrentPosition(),

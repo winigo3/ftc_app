@@ -103,7 +103,7 @@ public class HardwareMap
 //        csServo = hwMap.servo.get("cs");
 //        csServo.setPosition(.9);
         mServo = hwMap.servo.get("ms");
-        mServo.setPosition(.8);
+        mServo.setPosition(0);
         aServo = hwMap.servo.get("a");
         aServo.setPosition(.4);
 //        color2 = hwMap.colorSensor.get("c2");
@@ -136,7 +136,9 @@ public class HardwareMap
       //  armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         armMotor.setTargetPosition(3355);
+        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         craterArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        craterArm.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         // Define and initialize ALL installed servos.
        // arm  = hwMap.get(Servo.class, "arm");
        // claw = hwMap.get(Servo.class, "claw");
