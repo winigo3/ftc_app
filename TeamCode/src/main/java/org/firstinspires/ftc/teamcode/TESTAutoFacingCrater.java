@@ -210,7 +210,7 @@ public class TESTAutoFacingCrater extends LinearOpMode {
 
         TurnRight(18.5);
 
-        robot.csServo.setPosition(.2);
+//        robot.csServo.setPosition(.2); --------------------------------------------------
   //      robot.cs2Servo.setPosition(.5);
 /*
         GoBack(14);
@@ -285,10 +285,10 @@ public class TESTAutoFacingCrater extends LinearOpMode {
     public void knock()
     {
         GoBack(5);
-        robot.csServo.setPosition(.1);
+//        robot.csServo.setPosition(.1);
         sleep(250);
         GO(5.5, .75);
-        robot.csServo.setPosition(.8);
+//        robot.csServo.setPosition(.8);
     }
 
 

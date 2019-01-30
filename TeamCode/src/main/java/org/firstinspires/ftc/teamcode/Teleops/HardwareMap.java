@@ -60,15 +60,18 @@ public class HardwareMap
     public DcMotor  leftDrive   = null;
     public DcMotor  rightDrive  = null;
     public DcMotor armMotor = null;
+    public DcMotor craterArm = null;
     public Servo    csServo       = null;
     public ColorSensor color1 = null;
     public ColorSensor color2 = null;
     public Servo mServo = null;
+    public Servo aServo = null;
+    public Servo dumperArm = null;
     public BNO055IMU imu;
 
     //public Servo cs2Servo = null;
 
-    public Servo    claw        = null;
+    //public Servo    claw        = null;
 
     public final static double ARM_HOME = 0.2;
     public final static double CLAW_HOME = 0.2;
@@ -94,12 +97,17 @@ public class HardwareMap
         leftDrive  = hwMap.get(DcMotor.class, "l");
         rightDrive = hwMap.get(DcMotor.class, "r");
         armMotor = hwMap.get(DcMotor.class, "arm");
-        csServo = hwMap.servo.get("cs");
-        csServo.setPosition(.9);
+        craterArm = hwMap.get(DcMotor.class, "ca");
+        dumperArm = hwMap.servo.get("dwn");
+        dumperArm.setPosition(.8);
+//        csServo = hwMap.servo.get("cs");
+//        csServo.setPosition(.9);
         mServo = hwMap.servo.get("ms");
         mServo.setPosition(.8);
-        color2 = hwMap.colorSensor.get("c2");
-        color1 = hwMap.colorSensor.get("c1");
+        aServo = hwMap.servo.get("a");
+        aServo.setPosition(.4);
+//        color2 = hwMap.colorSensor.get("c2");
+//        color1 = hwMap.colorSensor.get("c1");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
         parameters.angleUnit           = BNO055IMU.AngleUnit.DEGREES;
         parameters.accelUnit           = BNO055IMU.AccelUnit.METERS_PERSEC_PERSEC;
@@ -118,6 +126,7 @@ public class HardwareMap
         // Set all motors to zero power
         leftDrive.setPower(0);
         rightDrive.setPower(0);
+        craterArm.setPower(0);
         //armMotor.setPower(0);
 
         // Set all motors to run without encoders.
@@ -127,7 +136,7 @@ public class HardwareMap
       //  armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         armMotor.setTargetPosition(3355);
-
+        craterArm.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         // Define and initialize ALL installed servos.
        // arm  = hwMap.get(Servo.class, "arm");
        // claw = hwMap.get(Servo.class, "claw");

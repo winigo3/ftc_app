@@ -103,8 +103,8 @@ public class TankTeleopTelemetry extends LinearOpMode {
             robot.leftDrive.setPower(left);
             robot.rightDrive.setPower(right);
 
-            if(gamepad1.dpad_down)
-                robot.csServo.setPosition(.2);
+//            if(gamepad1.dpad_down)
+//                robot.csServo.setPosition(.2);
 
 
             //   Use gamepad bumpers to raise and lower the arm
@@ -149,12 +149,12 @@ public class TankTeleopTelemetry extends LinearOpMode {
 /*            telemetry.addData("Alpha 1", robot.color1.alpha());
             telemetry.addData("Red 1", robot.color1.red());
             telemetry.addData("Green 1", robot.color1.green());
-*/            telemetry.addData("Blue 1", robot.color1.blue());
-/*            telemetry.addData("Alpha 2", robot.color2.alpha());
+            telemetry.addData("Blue 1", robot.color1.blue());
+            telemetry.addData("Alpha 2", robot.color2.alpha());
             telemetry.addData("Red 2", robot.color2.red());
             telemetry.addData("Green 2", robot.color2.green());
-*/            telemetry.addData("Blue 2", robot.color2.blue());
-            telemetry.update();
+            telemetry.addData("Blue 2", robot.color2.blue());
+*/            telemetry.update();
             //Pause for 40 mS each cycle = update 25 times a second.
 
             sleep(40);

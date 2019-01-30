@@ -35,7 +35,7 @@ import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.Range;
 
-import org.firstinspires.ftc.robotcontroller.external.samples.HardwareK9bot;
+//import org.firstinspires.ftc.robotcontroller.external.samples.HardwareK9bot;     //UNCOMMENT IF MESS UP HAPPENS
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
@@ -134,26 +134,18 @@ public class TeleopTank_Drive extends LinearOpMode {
                 robot.armMotor.setPower(0);
 
 
-            if (gamepad1.dpad_down)
-                robot.csServo.setPosition(0.2);
-            if (gamepad1.dpad_up)
-                robot.csServo.setPosition(.8);
-/*
-            if(gamepad2.a)
-                rotate(180, 0.5);    //did not stop spinning
-            if(gamepad2.b)
-                rotate(45, 0.5);
-            if(gamepad2.y)
-                rotate(90, 0.5);
-            if(gamepad2.x)
-                rotate(135, 0.5);
-*/
+            if (gamepad2.dpad_down)
+                robot.aServo.setPosition(.2);
+            if (gamepad2.dpad_up)
+                robot.aServo.setPosition(.8);
 
 
-            if (gamepad2.b)
-                TurnLeft(45);
-            if (gamepad2.x)
-                TurnRight(45);
+            if (gamepad2.right_bumper)
+                robot.craterArm.setPower(.5);
+            else if (gamepad2.left_bumper)
+                robot.craterArm.setPower(-.5);
+            else
+                robot.craterArm.setPower(0);
 
                // robot.rightDrive.setPower(0);
 
