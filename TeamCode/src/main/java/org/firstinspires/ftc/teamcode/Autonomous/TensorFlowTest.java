@@ -27,11 +27,11 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.teamcode.Teleops;
+package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -39,38 +39,20 @@ import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer;
 import org.firstinspires.ftc.robotcore.external.navigation.VuforiaLocalizer.CameraDirection;
 import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.robotcore.external.tfod.TFObjectDetector;
+import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
 
 import java.util.List;
 
-/**
- * This 2018-2019 OpMode illustrates the basics of using the TensorFlow Object Detection API to
- * determine the position of the gold and silver minerals.
- *
- * Use Android Studio to Copy this Class, and Paste it into your team's code folder with a new name.
- * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list.
- *
- * IMPORTANT: In order to use this OpMode, you need to obtain your own Vuforia license key as
- * is explained below.
- */
-@TeleOp(name = "TensorFlow Object Detection", group = "BACON")
+
+@Autonomous(name = "TensorFlow Test", group = "Pushbot")
 //@Disabled
 public class TensorFlowTest extends LinearOpMode {
+
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
     private static final String LABEL_SILVER_MINERAL = "Silver Mineral";
 
-    /*
-     * IMPORTANT: You need to obtain your own license key to use Vuforia. The string below with which
-     * 'parameters.vuforiaLicenseKey' is initialized is for illustration only, and will not function.
-     * A Vuforia 'Development' license key, can be obtained free of charge from the Vuforia developer
-     * web site at https://developer.vuforia.com/license-manager.
-     *
-     * Vuforia license keys are always 380 characters long, and look as if they contain mostly
-     * random data. As an example, here is a example of a fragment of a valid key:
-     *      ... yIgIzTqZ4mWjk9wd3cZO9T1axEqzuhxoGlfOOI2dRzKS4T0hQ8kT ...
-     * Once you've obtained a license key, copy the string from the Vuforia web site
-     * and paste it in to your code on the next line, between the double quotes.
-     */
+
     private static final String VUFORIA_KEY = "AbWq5Uv/////AAAAGcM6elMmVUOogS1JXLiPuvxUPJgstfq86yvjnKb87ZG0oftSUkO7FUXo+LPZdGe3ytBqkwQmXV6b0hiAMotK9TAX//BaE8tYQe0cJQzMPk5jjMAmLbZgZ1p3V9EQzp59pYvYvBMYzoNw7YzlpMNC3GzmXd40NyecOmx8Q6lp/tQikXO0yKGQLIoJpKtGfoVkxpmyCx/u4/6FYBAGyvZt8I8mz3UtGl/Yf366XKgNXq26uglpVfeurmB/cV5RzMVdVDTdyE/2yLqjalrAKgL2CZFv3iY/MnxW+pIyJUHbXUQVCUoB8SqULq7u948Vx+5w5ObesVFNzZ3jbBTBHwUWbpaJAZFGjmD1dRaVdS/GK74x";
 
     /**
@@ -79,6 +61,7 @@ public class TensorFlowTest extends LinearOpMode {
      */
     private VuforiaLocalizer vuforia;
     public boolean goldFound = false;
+    public boolean path1 = false, path2 = false, path3 = false;
 
 
     HardwareMap robot = new HardwareMap();
@@ -107,11 +90,9 @@ public class TensorFlowTest extends LinearOpMode {
         sleep(500);
 
         robot.armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
-        //robot.armMotor.setPower(-.0001);
         robot.leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
         robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        // Send telemetry message to indicate successful Encoder reset
 
 
         initVuforia();
@@ -125,6 +106,7 @@ public class TensorFlowTest extends LinearOpMode {
         /** Wait for the game to begin */
         telemetry.addData(">", "Press Play to start tracking");
         telemetry.update();
+
         waitForStart();
 
         robot.armMotor.setTargetPosition(5750);
@@ -146,14 +128,11 @@ public class TensorFlowTest extends LinearOpMode {
 
         TurnRight(15);
 
+        GO(2, 0.5);
+
         sleep(3000);
 
         if (opModeIsActive()) {
-
-            if (gamepad2.dpad_down)
-                robot.aServo.setPosition(.2);
-            if (gamepad2.dpad_up)
-                robot.aServo.setPosition(.8);
 
             /** Activate Tensor Flow Object Detection. */
             if (tfod != null) {
@@ -166,32 +145,46 @@ public class TensorFlowTest extends LinearOpMode {
                     // the last time that call was made.
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
-                      telemetry.addData("# Object Detected", updatedRecognitions.size());
-                      //if (updatedRecognitions.size() == 1) {
+                     //   telemetry.addData("# Object Detected", updatedRecognitions.size());
+                        if (updatedRecognitions.size() == 1) {
 
-                        for (Recognition recognition : updatedRecognitions) {
-                            if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                                GO(25, .5);
-                                telemetry.addData("yaaa oouu", "big gold");
-                                goldFound = true;
-                            } else {
-                                telemetry.addData("Silver", "is here");
+                            for (Recognition recognition : updatedRecognitions) {
+                                if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                                    sleep(1000);
+                                    telemetry.addData("gold", "1st");
+                                    path1 = true;                                             //Add the path stuff
+                                    GO(27.5, .5);
+                                    goldFound = true;
+                                } else {
+                                    telemetry.addData("Silver", "1st");
+                                }
                             }
-                        }
-                        sleep(1000);
-                        TurnLeft(15);
-                        for (Recognition recognition : updatedRecognitions) {
-                              if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
-                                  GO(25, .5);
-                                  telemetry.addData("my block", "now");
-                                  goldFound = true; }
-                          }
-                        if(!goldFound) {
-                            TurnLeft(15);
-                            GO(25, .5);
-                        }
 
-                      telemetry.update();
+                            if(!goldFound) {
+                                sleep(1000);
+                                TurnLeft(18);
+                                sleep(2500);
+
+                                updatedRecognitions.clear();
+                                updatedRecognitions = tfod.getUpdatedRecognitions();
+
+                                for (Recognition recognition : updatedRecognitions) {
+                                    if (recognition.getLabel().equals(LABEL_GOLD_MINERAL)) {
+                                        sleep(1000);
+                                        telemetry.addData("gold", "2nd");
+                                        GO(27.5, .5);
+                                        goldFound = true;
+                                    }
+                                    else {
+                                        telemetry.addData("silver", "2nd");
+                                        TurnLeft(20);
+                                        GO(27.5, .5);
+                                    }
+                                }
+                            }
+
+                            telemetry.update();
+                        }
                     }
                 }
             }
@@ -200,6 +193,7 @@ public class TensorFlowTest extends LinearOpMode {
         if (tfod != null) {
             tfod.shutdown();
         }
+        sleep(10000);
     }
 
     /**
