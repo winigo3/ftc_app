@@ -105,7 +105,7 @@ public class HardwareMap
         mServo = hwMap.servo.get("ms");
         mServo.setPosition(0);
         aServo = hwMap.servo.get("a");
-        aServo.setPosition(.4);
+        aServo.setPosition(.25);
 //        color2 = hwMap.colorSensor.get("c2");
 //        color1 = hwMap.colorSensor.get("c1");
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();

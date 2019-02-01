@@ -29,9 +29,8 @@
 
 package org.firstinspires.ftc.teamcode.Autonomous;
 
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
-import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 
 import org.firstinspires.ftc.robotcore.external.ClassFactory;
@@ -44,9 +43,9 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
 import java.util.List;
 
 
-@Autonomous(name = "TensorFlow Test", group = "Pushbot")
+@Autonomous(name = "TensorFlow Depot", group = "Pushbot")
 //@Disabled
-public class TensorFlowTest extends LinearOpMode {
+public class TensorFlowCrater extends LinearOpMode {
 
     private static final String TFOD_MODEL_ASSET = "RoverRuckus.tflite";
     private static final String LABEL_GOLD_MINERAL = "Gold Mineral";
@@ -161,7 +160,7 @@ public class TensorFlowTest extends LinearOpMode {
                             if(!goldFound) {
                                 sleep(500);
                                 TurnLeft(17.5);
-                                sleep(2000);
+                                sleep(2500);
 
                                 updatedRecognitions.clear();
                                 updatedRecognitions = tfod.getUpdatedRecognitions();
@@ -178,8 +177,8 @@ public class TensorFlowTest extends LinearOpMode {
                             }
                             if(!goldFound) {
                                 telemetry.addData("silver", "2nd");
-                                TurnLeft(18);
-                                GO(33, .75);
+                                TurnLeft(20);
+                                GO(27.5, .75);
                                 path3 = true; }
 
 
@@ -196,38 +195,31 @@ public class TensorFlowTest extends LinearOpMode {
 
         if(path1)
         {
-            TurnRight(37.5);
-            GO(38, 1);
-            TurnRight(13);
-            GO(38, 1);
-            robot.mServo.setPosition(.8);
-            sleep(250);
-            GoBack(70, 1);
             telemetry.addData("path", "1st position");
             telemetry.update();
+            TurnLeft(17.5);
+            GO(20, 1);
+            TurnLeft(10);
+            robot.mServo.setPosition(.8);
         }
         else if(path2)
         {
-            GoBack(10, .75);
             telemetry.addData("path", "2nd position");
             telemetry.update();
-            TurnRight(45);
-            GO(64, 1);
-            TurnRight(16);
-            GO(30, 1);
+            GO(17.5, 1);
+            TurnLeft(22.5);
             robot.mServo.setPosition(.8);
-            sleep(250);
-            //GoBack(72, 1);
         }
         else if(path3)
         {
-            GoBack(8,.75);
             telemetry.addData("path", "3rd position");
             telemetry.update();
-            TurnRight(52);
-            GO(73, 1);
-            TurnRight(19);
+            TurnRight(35);
+            GO(30, 1);
+            TurnLeft(45);
+            robot.mServo.setPosition(.8);
         }
+
 
         sleep(10000);
     }

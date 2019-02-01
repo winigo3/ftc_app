@@ -30,6 +30,7 @@
 package org.firstinspires.ftc.teamcode.Autonomous;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -65,7 +66,7 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
 
 //Original autonomous facing the depot (no color path)
 @Autonomous(name = "Auto facing marker", group = "Pushbot")
-//@Disabled
+@Disabled
 public class AutoFacingCorner extends LinearOpMode {
 
     /* Declare OpMode members. */

@@ -135,16 +135,17 @@ public class TeleopTank_Drive extends LinearOpMode {
                 robot.armMotor.setPower(0);
 
 
-            if (gamepad2.dpad_down)
-                robot.aServo.setPosition(.2);
             if (gamepad2.dpad_up)
-                robot.aServo.setPosition(.8);
+                robot.aServo.setPosition(.2);
+            else if (gamepad2.dpad_down)
+                robot.aServo.setPosition(.9);
+            else if(gamepad2.dpad_left)
+                robot.aServo.setPosition(.5);
 
-
-            if (gamepad2.right_bumper)
-                robot.craterArm.setPower(.5);
-            else if (gamepad2.left_bumper)
-                robot.craterArm.setPower(-.5);
+            if(gamepad2.right_trigger > 0)
+                robot.craterArm.setPower(gamepad2.right_trigger);
+            else if (gamepad2.left_trigger > 0)
+                robot.craterArm.setPower(-gamepad2.left_trigger);
             else
                 robot.craterArm.setPower(0);
 
