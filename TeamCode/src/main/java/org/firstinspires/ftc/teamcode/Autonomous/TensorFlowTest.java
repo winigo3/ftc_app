@@ -44,7 +44,7 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
 import java.util.List;
 
 
-@Autonomous(name = "TensorFlow Test", group = "Pushbot")
+@Autonomous(name = "TensorFlow Crater", group = "Pushbot")
 //@Disabled
 public class TensorFlowTest extends LinearOpMode {
 
@@ -126,7 +126,7 @@ public class TensorFlowTest extends LinearOpMode {
 
         telemetry.update();
 
-        TurnRight(15);
+        TurnRight(18);
 
         GO(3, 0.5);
 
@@ -159,9 +159,9 @@ public class TensorFlowTest extends LinearOpMode {
                             }
 
                             if(!goldFound) {
-                                sleep(500);
-                                TurnLeft(17.5);
-                                sleep(2000);
+                                sleep(100);
+                                TurnLeft(19);
+                                sleep(1500);
 
                                 updatedRecognitions.clear();
                                 updatedRecognitions = tfod.getUpdatedRecognitions();
@@ -171,7 +171,7 @@ public class TensorFlowTest extends LinearOpMode {
                                         sleep(250);
                                         telemetry.addData("gold", "2nd");
                                         path2 = true;
-                                        GO(27.5, .75);
+                                        GO(29, .75);
                                         goldFound = true;
                                     }
                                 }
@@ -179,7 +179,7 @@ public class TensorFlowTest extends LinearOpMode {
                             if(!goldFound) {
                                 telemetry.addData("silver", "2nd");
                                 TurnLeft(18);
-                                GO(33, .75);
+                                GO(35, .75);
                                 path3 = true; }
 
 
@@ -196,37 +196,45 @@ public class TensorFlowTest extends LinearOpMode {
 
         if(path1)
         {
-            TurnRight(37.5);
-            GO(38, 1);
-            TurnRight(13);
-            GO(38, 1);
-            robot.mServo.setPosition(.8);
-            sleep(250);
-            GoBack(70, 1);
             telemetry.addData("path", "1st position");
             telemetry.update();
+            TurnRight(37.5); //turn w/ mineral
+            GO(37, 1); //depot set-up
+            TurnRight(15); // depot turn
+            GO(38.5, 1);
+            robot.mServo.setPosition(.8);
+            sleep(500);
+            GoBack(70, 1);
+            TurnRight(7);
+            GoBack(15, 0.75);
         }
         else if(path2)
         {
-            GoBack(10, .75);
+            GoBack(11.5, .75);
             telemetry.addData("path", "2nd position");
             telemetry.update();
-            TurnRight(45);
-            GO(64, 1);
-            TurnRight(16);
+            TurnRight(41.5);
+            GO(61, 1);
+            TurnRight(20);
             GO(30, 1);
             robot.mServo.setPosition(.8);
             sleep(250);
-            //GoBack(72, 1);
+            GoBack(70, 1);
+            TurnRight(7);
+            GoBack(15, 0.75);
         }
         else if(path3)
         {
-            GoBack(8,.75);
+            GoBack(10,.75);
             telemetry.addData("path", "3rd position");
             telemetry.update();
-            TurnRight(52);
-            GO(73, 1);
-            TurnRight(19);
+            TurnRight(53.5);
+            GO(69, 1);
+            TurnRight(21);
+            GO(33, 1);
+            robot.mServo.setPosition(.8);
+            sleep(250);
+            GoBack(72, 0.8);
         }
 
         sleep(10000);
@@ -275,8 +283,8 @@ public class TensorFlowTest extends LinearOpMode {
         telemetry.update();
         sleep(500);
 
-        robot.rightDrive.setPower(-.4);
-        robot.leftDrive.setPower(.4);
+        robot.rightDrive.setPower(-.5);
+        robot.leftDrive.setPower(.5);
 
         while (robot.leftDrive.getCurrentPosition() > -degrees*24.444 && opModeIsActive()) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -305,8 +313,8 @@ public class TensorFlowTest extends LinearOpMode {
         telemetry.update();
         sleep(500);
 
-        robot.rightDrive.setPower(.4);
-        robot.leftDrive.setPower(-.4);
+        robot.rightDrive.setPower(.5);
+        robot.leftDrive.setPower(-.5);
 
         while (robot.leftDrive.getCurrentPosition() < degrees*24.444 && opModeIsActive()) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",

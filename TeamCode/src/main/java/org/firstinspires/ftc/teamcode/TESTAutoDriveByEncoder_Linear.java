@@ -67,7 +67,7 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
 
 //Old autonomous facing crater (w/o color path)
 @Autonomous(name = "Auto facing crater", group = "Pushbot")
-//@Disabled
+@Disabled
 public class TESTAutoDriveByEncoder_Linear extends LinearOpMode {
 
     /* Declare OpMode members. */

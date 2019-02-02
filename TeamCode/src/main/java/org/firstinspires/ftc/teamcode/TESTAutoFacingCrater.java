@@ -33,6 +33,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
@@ -69,7 +70,7 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
 
 //NEW autonomous facing the crater (w/ color path)
 @Autonomous(name = "80 point crater side", group = "Pushbot")
-//@Disabled
+@Disabled
 public class TESTAutoFacingCrater extends LinearOpMode {
 
     /* Declare OpMode members. */

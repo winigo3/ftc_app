@@ -42,7 +42,7 @@ import org.firstinspires.ftc.teamcode.Teleops.HardwareMap;
 
 import java.util.List;
 
-
+//NAMED IT WRONG lol
 @Autonomous(name = "TensorFlow Depot", group = "Pushbot")
 //@Disabled
 public class TensorFlowCrater extends LinearOpMode {
@@ -125,7 +125,7 @@ public class TensorFlowCrater extends LinearOpMode {
 
         telemetry.update();
 
-        TurnRight(15);
+        TurnRight(18);
 
         GO(3, 0.5);
 
@@ -142,7 +142,7 @@ public class TensorFlowCrater extends LinearOpMode {
                     // the last time that call was made.
                     List<Recognition> updatedRecognitions = tfod.getUpdatedRecognitions();
                     if (updatedRecognitions != null) {
-                     //   telemetry.addData("# Object Detected", updatedRecognitions.size());
+                        //   telemetry.addData("# Object Detected", updatedRecognitions.size());
                         if (updatedRecognitions.size() == 1) {
 
                             for (Recognition recognition : updatedRecognitions) {
@@ -158,9 +158,9 @@ public class TensorFlowCrater extends LinearOpMode {
                             }
 
                             if(!goldFound) {
-                                sleep(500);
+                                sleep(100);
                                 TurnLeft(17.5);
-                                sleep(2500);
+                                sleep(1500);
 
                                 updatedRecognitions.clear();
                                 updatedRecognitions = tfod.getUpdatedRecognitions();
@@ -170,15 +170,15 @@ public class TensorFlowCrater extends LinearOpMode {
                                         sleep(250);
                                         telemetry.addData("gold", "2nd");
                                         path2 = true;
-                                        GO(27.5, .75);
+                                        GO(31, .75);
                                         goldFound = true;
                                     }
                                 }
                             }
                             if(!goldFound) {
                                 telemetry.addData("silver", "2nd");
-                                TurnLeft(20);
-                                GO(27.5, .75);
+                                TurnLeft(19);
+                                GO(35, .75);
                                 path3 = true; }
 
 
@@ -190,6 +190,7 @@ public class TensorFlowCrater extends LinearOpMode {
 
         }
 
+
         if (tfod != null) {
             tfod.shutdown(); }
 
@@ -197,27 +198,39 @@ public class TensorFlowCrater extends LinearOpMode {
         {
             telemetry.addData("path", "1st position");
             telemetry.update();
-            TurnLeft(17.5);
-            GO(20, 1);
-            TurnLeft(10);
+            GO(22, 1);
+            TurnLeft(46.5);
+            GO(19, 0.5);
             robot.mServo.setPosition(.8);
+            GoBack(60, 0.75);
+            GoBack(5, 0.4);
         }
         else if(path2)
         {
             telemetry.addData("path", "2nd position");
             telemetry.update();
-            GO(17.5, 1);
-            TurnLeft(22.5);
+            TurnRight(20);
+            GO(31, 1);
+            TurnLeft(47.5);
             robot.mServo.setPosition(.8);
+            sleep(250);
+            GoBack(52,1);
         }
         else if(path3)
         {
             telemetry.addData("path", "3rd position");
             telemetry.update();
             TurnRight(35);
-            GO(30, 1);
-            TurnLeft(45);
+            GO(49.5, 1);
+            TurnLeft(47);
+            GoBack(12.5, 0.75);
+            TurnRight(10);
             robot.mServo.setPosition(.8);
+            sleep(250);
+            GoBack(12.5, 0.75);
+            GoBack(50, 0.6);
+            TurnRight(2);
+            GoBack(17.5, 0.5);
         }
 
 
@@ -267,8 +280,8 @@ public class TensorFlowCrater extends LinearOpMode {
         telemetry.update();
         sleep(500);
 
-        robot.rightDrive.setPower(-.4);
-        robot.leftDrive.setPower(.4);
+        robot.rightDrive.setPower(-.5);
+        robot.leftDrive.setPower(.5);
 
         while (robot.leftDrive.getCurrentPosition() > -degrees*24.444 && opModeIsActive()) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",
@@ -297,8 +310,8 @@ public class TensorFlowCrater extends LinearOpMode {
         telemetry.update();
         sleep(500);
 
-        robot.rightDrive.setPower(.4);
-        robot.leftDrive.setPower(-.4);
+        robot.rightDrive.setPower(.5);
+        robot.leftDrive.setPower(-.5);
 
         while (robot.leftDrive.getCurrentPosition() < degrees*24.444 && opModeIsActive()) {
             telemetry.addData("Working", "Left: %7d Right: %7d Arm: %7d",

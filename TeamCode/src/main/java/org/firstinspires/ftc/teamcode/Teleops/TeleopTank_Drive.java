@@ -143,9 +143,9 @@ public class TeleopTank_Drive extends LinearOpMode {
                 robot.aServo.setPosition(.5);
 
             if(gamepad2.right_trigger > 0)
-                robot.craterArm.setPower(gamepad2.right_trigger);
+                robot.craterArm.setPower(gamepad2.right_trigger*0.7);
             else if (gamepad2.left_trigger > 0)
-                robot.craterArm.setPower(-gamepad2.left_trigger);
+                robot.craterArm.setPower(-gamepad2.left_trigger*0.7);
             else
                 robot.craterArm.setPower(0);
 
