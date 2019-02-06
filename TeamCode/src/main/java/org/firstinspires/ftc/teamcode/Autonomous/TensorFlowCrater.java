@@ -198,12 +198,12 @@ public class TensorFlowCrater extends LinearOpMode {
         {
             telemetry.addData("path", "1st position");
             telemetry.update();
-            GO(22, 1);
+            GO(23.25, 1);
             TurnLeft(46.5);
             GO(19, 0.5);
             robot.mServo.setPosition(.8);
             GoBack(60, 0.75);
-            GoBack(5, 0.4);
+            GoBack(11, 0.4);
         }
         else if(path2)
         {
@@ -211,10 +211,12 @@ public class TensorFlowCrater extends LinearOpMode {
             telemetry.update();
             TurnRight(20);
             GO(31, 1);
-            TurnLeft(47.5);
+            TurnLeft(46.5);
             robot.mServo.setPosition(.8);
             sleep(250);
             GoBack(52,1);
+            TurnRight(6);
+            GoBack(17.5, 0.6);
         }
         else if(path3)
         {
@@ -223,13 +225,13 @@ public class TensorFlowCrater extends LinearOpMode {
             TurnRight(35);
             GO(49.5, 1);
             TurnLeft(47);
-            GoBack(12.5, 0.75);
+            GoBack(14, 0.75);
             TurnRight(10);
             robot.mServo.setPosition(.8);
             sleep(250);
             GoBack(12.5, 0.75);
             GoBack(50, 0.6);
-            TurnRight(2);
+            TurnRight(3.5);
             GoBack(17.5, 0.5);
         }
 

@@ -126,7 +126,7 @@ public class TensorFlowTest extends LinearOpMode {
 
         telemetry.update();
 
-        TurnRight(18);
+        TurnRight(17.5);
 
         GO(3, 0.5);
 
@@ -178,7 +178,7 @@ public class TensorFlowTest extends LinearOpMode {
                             }
                             if(!goldFound) {
                                 telemetry.addData("silver", "2nd");
-                                TurnLeft(18);
+                                TurnLeft(17.5);
                                 GO(35, .75);
                                 path3 = true; }
 
@@ -199,8 +199,8 @@ public class TensorFlowTest extends LinearOpMode {
             telemetry.addData("path", "1st position");
             telemetry.update();
             TurnRight(37.5); //turn w/ mineral
-            GO(37, 1); //depot set-up
-            TurnRight(15); // depot turn
+            GO(39, 1); //depot set-up
+            TurnRight(17.5); // depot turn
             GO(38.5, 1);
             robot.mServo.setPosition(.8);
             sleep(500);
@@ -210,13 +210,13 @@ public class TensorFlowTest extends LinearOpMode {
         }
         else if(path2)
         {
-            GoBack(11.5, .75);
+            GoBack(12.5, .75);
             telemetry.addData("path", "2nd position");
             telemetry.update();
             TurnRight(41.5);
             GO(61, 1);
             TurnRight(20);
-            GO(30, 1);
+            GO(40, 1);
             robot.mServo.setPosition(.8);
             sleep(250);
             GoBack(70, 1);
@@ -228,7 +228,7 @@ public class TensorFlowTest extends LinearOpMode {
             GoBack(10,.75);
             telemetry.addData("path", "3rd position");
             telemetry.update();
-            TurnRight(53.5);
+            TurnRight(54.5);
             GO(69, 1);
             TurnRight(21);
             GO(33, 1);
