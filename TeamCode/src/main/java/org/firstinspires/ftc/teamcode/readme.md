@@ -1,5 +1,9 @@
 ## TeamCode Module
 
+> Competition files are in Autonomous and Teleops folders
+> For teleops: TeleopTank_Drive
+> For autonomous: TensorFlowCrater, TensorFlowTest
+
 Welcome!
 
 This module, TeamCode, is the place where you will write/paste the code for your team's
